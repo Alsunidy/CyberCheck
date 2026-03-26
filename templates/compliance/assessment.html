@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head><title>Assessment</title></head>
+<body>
+    <h2>{{ standard.name }} Assessment</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for domain in domains %}
+            <h3>{{ domain.name }}</h3>
+            {% for control in domain.control_set.all %}
+                <div>
+                    <h4>{{ control.title }}</h4>
+                    <p>{{ control.description }}</p>
+                    <select name="status_{{ control.id }}">
+                        <option value="compliant">Compliant</option>
+                        <option value="partial">Partially Compliant</option>
+                        <option value="non_compliant">Non-Compliant</option>
+                    </select>
+                    <input type="file" name="evidence_{{ control.id }}">
+                    <textarea name="notes_{{ control.id }}" placeholder="Notes..."></textarea>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        <button type="submit">Submit Assessment</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head><title>Results</title></head>
+<body>
+    <h2>Assessment Results: {{ standard.name }}</h2>
+    <h3>Overall Score: {{ score }}%</h3>
+    {% for domain in domains %}
+        <h4>{{ domain.name }}</h4>
+        {% for result in domain.results %}
+            <div>
+                <strong>{{ result.control.title }}</strong>
+                <span>{{ result.get_status_display }}</span>
+                {% if result.notes %}<p>{{ result.notes }}</p>{% endif %}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <a href="/">Back to Home</a>
+</body>
+</html>

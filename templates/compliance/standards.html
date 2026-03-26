@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head><title>Select Standard</title></head>
+<body>
+    <h2>Select a Cybersecurity Standard</h2>
+    {% for standard in standards %}
+        <div>
+            <h3>{{ standard.name }}</h3>
+            <p>{{ standard.description }}</p>
+            <a href="/assessment/{{ standard.id }}">Start Assessment</a>
+        </div>
+    {% endfor %}
+</body>
+</html>
