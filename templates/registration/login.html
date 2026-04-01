@@ -1,15 +1,77 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
-<html>
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}">
 <head>
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans "Login - CyberCheck" %}</title>
+    {% if LANGUAGE_CODE == 'ar' %}
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&family=Montserrat:wght@300&display=swap" rel="stylesheet"/>
+    {% else %}
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet"/>
+    {% endif %}
+    {% if LANGUAGE_CODE == 'ar' %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    {% else %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
-<body>
-    <h2>Login</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="/register">Register</a></p>
+<body class="{% if LANGUAGE_CODE == 'ar' %}lang-ar{% endif %}">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container d-flex flex-wrap align-items-center justify-content-between gap-2">
+        <a class="navbar-brand mb-0" href="/"><img src="{% static 'images/logo.png' %}" height="50" alt="{% trans 'CyberCheck' %}"></a>
+        {% include "includes/language_switcher.html" %}
+    </div>
+</nav>
+
+<section class="vh-100">
+    <div class="container-fluid h-custom">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+                <img src="{% static 'images/Enter OTP-cuate.svg' %}" class="img-fluid" alt="">
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="divider d-flex align-items-center my-4">
+                        <p class="text-center fw-bold mx-3 mb-0">{% trans "Sign in" %}</p>
+                    </div>
+
+                    {% if form and form.errors %}
+                    <div class="alert alert-danger">{% trans "Invalid username or password." %}</div>
+                    {% endif %}
+
+                    <div class="form-outline mb-4">
+                        <input type="text" name="username" class="form-control form-control-lg" placeholder="{% trans 'Username' %}" required autocomplete="username"/>
+                    </div>
+                    <div class="form-outline mb-3">
+                        <input type="password" name="password" class="form-control form-control-lg" placeholder="{% trans 'Password' %}" required autocomplete="current-password"/>
+                    </div>
+
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" name="remember_me" id="remember_me" value="1">
+                        <label class="form-check-label" for="remember_me">{% trans "Remember me" %}</label>
+                    </div>
+
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                        <button type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">{% trans "Login" %}</button>
+                        <p class="small fw-bold mt-2 pt-1 mb-0">{% trans "Don't have an account?" %} <a href="/register" class="link-danger">{% trans "Register" %}</a></p>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="gradient d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
+        <div class="text-white mb-3 mb-md-0">{% trans "Copyright © 2025. All rights reserved." %}</div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,0 +1,96 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% trans "CyberCheck" %}{% endblock %}</title>
+    {% if LANGUAGE_CODE == 'ar' %}
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'css/DB.css' %}">
+    {% if LANGUAGE_CODE == 'ar' %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    {% else %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    {% endif %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="{% if LANGUAGE_CODE == 'ar' %}lang-ar{% endif %}">
+
+<nav class="navbar navbar-expand navbar-light bg-light static-top shadow">
+    <div class="container">
+        <a class="navbar-brand" href="/"><img src="{% static 'images/logo.png' %}" height="50" alt="{% trans 'CyberCheck' %}"></a>
+        <div class="collapse navbar-collapse justify-content-end align-items-center">
+            <ul class="navbar-nav align-items-center flex-row flex-wrap gap-1">
+                <li class="nav-item"><a class="nav-link" href="/">{% trans "Home" %}</a></li>
+                <li class="nav-item"><a class="nav-link" href="/dashboard">{% trans "Dashboard" %}</a></li>
+                <li class="nav-item"><a class="nav-link" href="/logout">{% trans "Logout" %} ({{ user.username }})</a></li>
+                <li class="nav-item">{% include "includes/language_switcher.html" %}</li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="wrapper">
+    <aside id="sidebar">
+        <div class="d-flex">
+            <button id="toggle-btn" type="button" aria-label="{% trans 'Toggle sidebar' %}">
+                <i class="bi bi-columns-gap"></i>
+            </button>
+            <div class="sidebar-logo">
+                <a href="/dashboard">{% trans "CyberCheck" %}</a>
+            </div>
+        </div>
+        <ul class="sidebar-nav">
+            <li class="sidebar-item">
+                <a href="/dashboard" class="sidebar-link">
+                    <i class="bi bi-list-task"></i>
+                    <span>{% trans "Dashboard" %}</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="{% url 'standards' %}" class="sidebar-link {% block compliance_assessment_active %}{% endblock %}">
+                    <i class="bi bi-clipboard2-check"></i>
+                    <span>{% trans "Assessment" %}</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="{% block compliance_report_href %}{% url 'reports' %}{% endblock %}" class="sidebar-link {% block compliance_report_active %}{% endblock %}">
+                    <i class="bi bi-layout-text-sidebar-reverse"></i>
+                    <span>{% trans "Report" %}</span>
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="/dashboard" class="sidebar-link">
+                <i class="bi bi-person-circle"></i>
+                <span>{{ user.username }}</span>
+            </a>
+        </div>
+    </aside>
+
+    <div class="main p-3">
+        <div class="container-fluid py-2 py-md-3">
+            {% if messages %}
+            <div class="mb-3" role="region" aria-label="{% trans 'Notifications' %}">
+                {% for message in messages %}
+                <div class="alert {% if 'error' in message.tags %}alert-danger{% elif 'success' in message.tags %}alert-success{% elif 'warning' in message.tags %}alert-warning{% else %}alert-info{% endif %} alert-dismissible fade show rounded-4 shadow-sm border-0 mb-2" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{% trans 'Close' %}"></button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% block compliance_content %}{% endblock %}
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/index.js' %}"></script>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

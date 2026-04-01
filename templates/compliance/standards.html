@@ -1,14 +1,54 @@
-<!DOCTYPE html>
-<html>
-<head><title>Select Standard</title></head>
-<body>
-    <h2>Select a Cybersecurity Standard</h2>
-    {% for standard in standards %}
-        <div>
-            <h3>{{ standard.name }}</h3>
-            <p>{{ standard.description }}</p>
-            <a href="/assessment/{{ standard.id }}">Start Assessment</a>
-        </div>
-    {% endfor %}
-</body>
-</html>
+{% extends "compliance/base_compliance.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Standards" %} — {% trans "CyberCheck" %}{% endblock %}
+
+{% block compliance_assessment_active %}active{% endblock %}
+
+{% block compliance_content %}
+
+            <div class="row mb-4 align-items-end">
+                <div class="col-lg-8">
+                    <p class="text-uppercase small fw-semibold text-primary mb-1" style="letter-spacing: 0.06em;">{% trans "Assessment" %}</p>
+                    <h1 class="h2 mb-2 fw-semibold">{% trans "Choose a cybersecurity standard" %}</h1>
+                    <p class="text-muted mb-0 lead fs-6">
+                        {% trans "Pick a framework to run a guided assessment. Your progress is saved per standard." %}
+                    </p>
+                </div>
+                <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                    <span class="badge rounded-pill bg-light text-dark border px-3 py-2">
+                        <i class="bi bi-layers me-1"></i>{% trans "Available standards" %}: {{ standards.count }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                {% for standard in standards %}
+                <div class="col-md-6 col-xl-4">
+                    <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden position-relative standards-card">
+                        <div class="card-body p-4 d-flex flex-column">
+                            <div class="standards-icon-wrap mb-3">
+                                <i class="bi {% cycle 'bi-shield-check' 'bi-journal-code' 'bi-diagram-3' 'bi-clipboard2-pulse' %} text-white fs-4"></i>
+                            </div>
+                            <h2 class="h5 fw-semibold mb-2">{{ standard.name }}</h2>
+                            <p class="text-muted small flex-grow-1 mb-4">{{ standard.description }}</p>
+                            <a href="{% url 'assessment' standard.id %}" class="btn btn-primary stretched-link align-self-start rounded-pill px-4">
+                                {% trans "Start assessment" %}
+                                <i class="bi bi-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm rounded-4">
+                        <div class="card-body p-5 text-center text-muted">
+                            <i class="bi bi-inbox fs-1 d-block mb-3 opacity-50"></i>
+                            <p class="mb-0">{% trans "No standards are available yet. Check back later or contact an administrator." %}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+{% endblock %}

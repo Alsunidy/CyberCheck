@@ -1,0 +1,67 @@
+{% extends "compliance/base_compliance.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Reports" %} — {% trans "CyberCheck" %}{% endblock %}
+
+{% block compliance_report_active %}active{% endblock %}
+
+{% block compliance_content %}
+
+            <nav aria-label="breadcrumb" class="mb-3">
+                <ol class="breadcrumb mb-0 small">
+                    <li class="breadcrumb-item"><a href="{% url 'standards' %}" class="text-decoration-none">{% trans "Standards" %}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{% trans "Reports" %}</li>
+                </ol>
+            </nav>
+
+            <div class="row mb-4 align-items-end">
+                <div class="col-lg-8">
+                    <p class="text-uppercase small fw-semibold text-primary mb-1" style="letter-spacing: 0.06em;">{% trans "Report" %}</p>
+                    <h1 class="h2 mb-2 fw-semibold">{% trans "Assessment reports" %}</h1>
+                    <p class="text-muted mb-0 lead fs-6">
+                        {% trans "Open a summary or a printable report for any standard. Counts reflect answers you have saved." %}
+                    </p>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                {% for standard in standards %}
+                <div class="col-md-6 col-xl-4">
+                    <div class="card border-0 shadow-sm h-100 rounded-4 standards-card">
+                        <div class="card-body p-4 d-flex flex-column">
+                            <div class="d-flex align-items-start justify-content-between gap-2 mb-2">
+                                <h2 class="h5 fw-semibold mb-0">{{ standard.name }}</h2>
+                                {% if standard.saved_results_count > 0 %}
+                                <span class="badge rounded-pill bg-success bg-opacity-10 text-success">{{ standard.saved_results_count }} {% trans "saved" %}</span>
+                                {% else %}
+                                <span class="badge rounded-pill bg-secondary bg-opacity-10 text-secondary">{% trans "No data yet" %}</span>
+                                {% endif %}
+                            </div>
+                            <p class="text-muted small flex-grow-1 mb-4">{{ standard.description|truncatewords:26 }}</p>
+                            <div class="d-flex flex-wrap gap-2">
+                                <a href="{% url 'results' standard.id %}" class="btn btn-primary rounded-pill px-3">
+                                    <i class="bi bi-graph-up me-1"></i> {% trans "Summary" %}
+                                </a>
+                                <a href="{% url 'results_print' standard.id %}" target="_blank" rel="noopener" class="btn btn-outline-dark rounded-pill px-3">
+                                    <i class="bi bi-printer me-1"></i> {% trans "Print / PDF" %}
+                                </a>
+                                <a href="{% url 'assessment' standard.id %}" class="btn btn-outline-secondary rounded-pill px-3">
+                                    <i class="bi bi-pencil me-1"></i> {% trans "Assess" %}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm rounded-4">
+                        <div class="card-body p-5 text-center text-muted">
+                            <i class="bi bi-inbox fs-1 d-block mb-3 opacity-50"></i>
+                            <p class="mb-0">{% trans "No standards are available yet. Check back later or contact an administrator." %}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+{% endblock %}

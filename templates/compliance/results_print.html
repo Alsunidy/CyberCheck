@@ -1,0 +1,246 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% trans "Report" %} — {{ standard.name }} | {% trans "CyberCheck" %}</title>
+    {% if LANGUAGE_CODE == 'ar' %}
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
+    {% endif %}
+    <style>
+        :root {
+            --ink: #0f172a;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --accent: #1e40af;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: {% if LANGUAGE_CODE == 'ar' %}'Cairo',{% endif %} 'Segoe UI', system-ui, sans-serif;
+            color: var(--ink);
+            line-height: 1.45;
+            margin: 0;
+            padding: 1.25rem 1.5rem 2rem;
+            max-width: 900px;
+            margin-inline: auto;
+            background: #fff;
+        }
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .toolbar button, .toolbar a {
+            font: inherit;
+            cursor: pointer;
+            padding: 0.45rem 0.9rem;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: #f8fafc;
+            color: var(--ink);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .toolbar button.primary {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+        .hint {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-inline-start: auto;
+        }
+        [dir="rtl"] th, [dir="rtl"] td { text-align: right; }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+        .brand img { height: 40px; width: auto; }
+        .brand h1 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.02em;
+        }
+        .meta {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+        }
+        .meta strong { color: var(--ink); }
+        h2 {
+            font-size: 1.05rem;
+            margin: 1.75rem 0 0.75rem;
+            padding-bottom: 0.35rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 0.75rem;
+            margin: 1rem 0 1.5rem;
+        }
+        .summary div {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.65rem 0.75rem;
+            text-align: center;
+        }
+        .summary .val { font-size: 1.35rem; font-weight: 700; }
+        .summary .lbl { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+        .score-big {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin: 0.25rem 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+            margin-bottom: 1rem;
+        }
+        th, td {
+            border: 1px solid var(--border);
+            padding: 0.45rem 0.5rem;
+            vertical-align: top;
+            text-align: inherit;
+        }
+        th {
+            background: #f1f5f9;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+        .status-ok { font-weight: 600; color: #15803d; }
+        .status-warn { font-weight: 600; color: #a16207; }
+        .status-bad { font-weight: 600; color: #b91c1c; }
+        .empty-report {
+            padding: 2rem;
+            text-align: center;
+            color: var(--muted);
+            border: 1px dashed var(--border);
+            border-radius: 8px;
+        }
+        footer {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+        @media print {
+            body { padding: 0; max-width: none; }
+            .toolbar, .hint { display: none !important; }
+            .brand { margin-bottom: 0.75rem; }
+            table { break-inside: avoid; }
+            h2 { break-after: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toolbar no-print">
+        <button type="button" class="primary" onclick="window.print()">{% trans "Print" %}</button>
+        <a href="{% url 'results' standard.id %}">{% trans "Back to results" %}</a>
+        <a href="{% url 'reports' %}">{% trans "All reports" %}</a>
+        <span class="hint">{% trans "For PDF: Print → choose \"Save as PDF\" / \"Microsoft Print to PDF\"." %}</span>
+    </div>
+
+    <header class="brand">
+        <img src="{% static 'images/logo.png' %}" alt="">
+        <h1>{% trans "CyberCheck — compliance assessment report" %}</h1>
+    </header>
+
+    <div class="meta">
+        <div><strong>{% trans "Standard:" %}</strong> {{ standard.name }}</div>
+        <div><strong>{% trans "Prepared for:" %}</strong> {{ user.get_username }}</div>
+        <div><strong>{% trans "Generated:" %}</strong> {{ generated_at|date:"Y-m-d H:i" }} ({{ generated_at|date:"e" }})</div>
+    </div>
+
+    <p style="margin-top:0;font-size:0.92rem;color:var(--muted);">{{ standard.description }}</p>
+
+    {% if assessed_total == 0 %}
+    <div class="empty-report">
+        {% trans "No assessment responses are recorded for this standard yet. Complete the assessment online, then open this report again." %}
+    </div>
+    {% else %}
+
+    <p class="score-big">{% blocktrans with s=score %}Overall: {{ s }}% compliant{% endblocktrans %}</p>
+
+    <div class="summary">
+        <div>
+            <div class="val">{{ assessed_total }}</div>
+            <div class="lbl">{% trans "Controls assessed" %}</div>
+        </div>
+        <div>
+            <div class="val" style="color:#15803d">{{ compliant_count }}</div>
+            <div class="lbl">{% trans "Compliant" %}</div>
+        </div>
+        <div>
+            <div class="val" style="color:#a16207">{{ partial_count }}</div>
+            <div class="lbl">{% trans "Partial" %}</div>
+        </div>
+        <div>
+            <div class="val" style="color:#b91c1c">{{ non_compliant_count }}</div>
+            <div class="lbl">{% trans "Non-compliant" %}</div>
+        </div>
+    </div>
+
+    {% for domain in domains %}
+    <h2>{{ domain.name }}</h2>
+    {% if domain.results %}
+    <table>
+        <thead>
+            <tr>
+                <th style="width:28%">{% trans "Control" %}</th>
+                <th style="width:14%">{% trans "Status" %}</th>
+                <th style="width:38%">{% trans "Notes" %}</th>
+                <th style="width:10%">{% trans "Evidence" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in domain.results %}
+            <tr>
+                <td>
+                    <strong>{{ result.control.title }}</strong>
+                    <div style="color:var(--muted);font-size:0.8rem;margin-top:0.25rem">{{ result.control.description }}</div>
+                </td>
+                <td>
+                    {% if result.status == 'compliant' %}
+                    <span class="status-ok">{% trans "Compliant" %}</span>
+                    {% elif result.status == 'partial' %}
+                    <span class="status-warn">{% trans "Partially compliant" %}</span>
+                    {% else %}
+                    <span class="status-bad">{% trans "Non-compliant" %}</span>
+                    {% endif %}
+                </td>
+                <td>{% if result.notes %}{{ result.notes|linebreaksbr }}{% else %}—{% endif %}</td>
+                <td>{% if result.evidence_file %}{% trans "Yes" %}{% else %}—{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="color:var(--muted);font-size:0.9rem;">{% trans "No responses in this domain." %}</p>
+    {% endif %}
+    {% endfor %}
+
+    {% endif %}
+
+    <footer>
+        {% trans "CyberCheck — for internal use. Evidence files are stored in the application; list above indicates attachment only." %}
+    </footer>
+
+</body>
+</html>

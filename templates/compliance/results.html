@@ -1,19 +1,141 @@
-<!DOCTYPE html>
-<html>
-<head><title>Results</title></head>
-<body>
-    <h2>Assessment Results: {{ standard.name }}</h2>
-    <h3>Overall Score: {{ score }}%</h3>
-    {% for domain in domains %}
-        <h4>{{ domain.name }}</h4>
-        {% for result in domain.results %}
-            <div>
-                <strong>{{ result.control.title }}</strong>
-                <span>{{ result.get_status_display }}</span>
-                {% if result.notes %}<p>{{ result.notes }}</p>{% endif %}
+{% extends "compliance/base_compliance.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Results" %} — {{ standard.name }} | {% trans "CyberCheck" %}{% endblock %}
+
+{% block compliance_report_active %}active{% endblock %}
+
+{% block compliance_content %}
+
+            <nav aria-label="breadcrumb" class="mb-3">
+                <ol class="breadcrumb mb-0 small">
+                    <li class="breadcrumb-item"><a href="{% url 'standards' %}" class="text-decoration-none">{% trans "Standards" %}</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'assessment' standard.id %}" class="text-decoration-none">{{ standard.name }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{% trans "Results" %}</li>
+                </ol>
+            </nav>
+
+            {% if assessed_total == 0 %}
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-5 text-center">
+                    <i class="bi bi-clipboard-data fs-1 text-muted d-block mb-3 opacity-50"></i>
+                    <h1 class="h4 fw-semibold mb-2">{% trans "No saved answers yet" %}</h1>
+                    <p class="text-muted mb-4">{% trans "Complete the assessment for this standard to see your compliance score and breakdown here." %}</p>
+                    <a href="{% url 'assessment' standard.id %}" class="btn btn-primary rounded-pill px-4">
+                        <i class="bi bi-pencil-square me-2"></i>{% trans "Go to assessment" %}
+                    </a>
+                    <a href="{% url 'standards' %}" class="btn btn-outline-secondary rounded-pill px-4 ms-2">{% trans "All standards" %}</a>
+                </div>
             </div>
-        {% endfor %}
-    {% endfor %}
-    <a href="/">Back to Home</a>
-</body>
-</html>
+            {% else %}
+
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+                <div class="card-body p-4 p-lg-5">
+                    <div class="row align-items-center gy-4">
+                        <div class="col-lg-auto text-center text-lg-start">
+                            <div class="results-hero-score mx-auto mx-lg-0">
+                                <span>{{ score }}%</span>
+                                <span>{% trans "Compliant" %}</span>
+                            </div>
+                        </div>
+                        <div class="col-lg">
+                            <p class="text-uppercase small fw-semibold text-primary mb-1" style="letter-spacing: 0.06em;">{% trans "Report" %}</p>
+                            <h1 class="h2 mb-2 fw-semibold">{% trans "Assessment results" %}</h1>
+                            <p class="text-muted mb-3 mb-lg-4">{{ standard.name }} — {% trans "summary of your latest submitted answers." %}</p>
+                            <div class="row g-2 g-sm-3 small">
+                                <div class="col-6 col-sm-3">
+                                    <div class="rounded-3 border bg-light p-3 text-center">
+                                        <div class="h4 mb-0 text-dark">{{ assessed_total }}</div>
+                                        <div class="text-muted">{% trans "Assessed" %}</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-sm-3">
+                                    <div class="rounded-3 border border-success border-opacity-25 bg-success bg-opacity-10 p-3 text-center">
+                                        <div class="h4 mb-0 text-success">{{ compliant_count }}</div>
+                                        <div class="text-muted">{% trans "Compliant" %}</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-sm-3">
+                                    <div class="rounded-3 border border-warning border-opacity-25 bg-warning bg-opacity-10 p-3 text-center">
+                                        <div class="h4 mb-0 text-warning">{{ partial_count }}</div>
+                                        <div class="text-muted">{% trans "Partial" %}</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-sm-3">
+                                    <div class="rounded-3 border border-danger border-opacity-25 bg-danger bg-opacity-10 p-3 text-center">
+                                        <div class="h4 mb-0 text-danger">{{ non_compliant_count }}</div>
+                                        <div class="text-muted">{% trans "Non-compliant" %}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-top d-flex flex-wrap gap-2 align-items-center">
+                        <a href="{% url 'assessment' standard.id %}" class="btn btn-primary rounded-pill px-4">
+                            <i class="bi bi-arrow-repeat me-1"></i> {% trans "Edit assessment" %}
+                        </a>
+                        <a href="{% url 'results_print' standard.id %}" target="_blank" rel="noopener" class="btn btn-outline-dark rounded-pill px-4">
+                            <i class="bi bi-printer me-1"></i> {% trans "Print / PDF" %}
+                        </a>
+                        <a href="{% url 'standards' %}" class="btn btn-outline-secondary rounded-pill px-4">{% trans "All standards" %}</a>
+                        <a href="/dashboard" class="btn btn-outline-primary rounded-pill px-4">{% trans "Dashboard" %}</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion assessment-accordion" id="resultsDomains">
+                {% for domain in domains %}
+                <div class="accordion-item border-0 shadow-sm mb-3 rounded-4 overflow-hidden">
+                    <h2 class="accordion-header" id="r-heading-{{ forloop.counter }}">
+                        <button class="accordion-button {% if not forloop.first %}collapsed{% endif %} fw-semibold py-3" type="button" data-bs-toggle="collapse" data-bs-target="#r-collapse-{{ forloop.counter }}" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="r-collapse-{{ forloop.counter }}">
+                            <i class="bi bi-diagram-3 text-primary me-2"></i>
+                            {{ domain.name }}
+                            <span class="badge bg-secondary bg-opacity-10 text-secondary ms-2 rounded-pill">{{ domain.results|length }} {% trans "items" %}</span>
+                        </button>
+                    </h2>
+                    <div id="r-collapse-{{ forloop.counter }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" aria-labelledby="r-heading-{{ forloop.counter }}">
+                        <div class="accordion-body pt-2 pb-3 bg-opacity-50" style="background: linear-gradient(180deg, rgba(59,125,221,0.06) 0%, transparent 80px);">
+                            {% for result in domain.results %}
+                            <div class="card assessment-control-card border-0 shadow-sm rounded-4 mb-3">
+                                <div class="card-body p-4">
+                                    <div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-2">
+                                        <h3 class="h6 fw-semibold mb-0">{{ result.control.title }}</h3>
+                                        {% if result.status == 'compliant' %}
+                                        <span class="results-status-badge badge rounded-pill bg-success">{% trans "Compliant" %}</span>
+                                        {% elif result.status == 'partial' %}
+                                        <span class="results-status-badge badge rounded-pill bg-warning text-dark">{% trans "Partially compliant" %}</span>
+                                        {% else %}
+                                        <span class="results-status-badge badge rounded-pill bg-danger">{% trans "Non-compliant" %}</span>
+                                        {% endif %}
+                                    </div>
+                                    <p class="text-muted small mb-3">{{ result.control.description }}</p>
+                                    {% if result.notes %}
+                                    <div class="rounded-3 bg-light border p-3 small mb-2">
+                                        <span class="fw-semibold text-secondary d-block mb-1"><i class="bi bi-sticky me-1"></i>{% trans "Notes" %}</span>
+                                        {{ result.notes|linebreaksbr }}
+                                    </div>
+                                    {% endif %}
+                                    {% if result.evidence_file %}
+                                    <div class="small">
+                                        <i class="bi bi-paperclip me-1 text-primary"></i>
+                                        <a href="{{ result.evidence_file.url }}" target="_blank" rel="noopener" class="text-decoration-none">{% trans "Evidence file" %}</a>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% empty %}
+                            <p class="text-muted small mb-0 px-2">{% trans "No controls answered in this domain for your account." %}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="card border-0 shadow-sm rounded-4">
+                    <div class="card-body p-4 text-muted">{% trans "No domains defined for this standard." %}</div>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% endif %}
+
+{% endblock %}

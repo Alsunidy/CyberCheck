@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+::after,
+::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+h1 {
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+body.lang-ar {
+    font-family: 'Cairo', 'Segoe UI', sans-serif;
+}
+
+.wrapper{
+    display: flex;
+}
+
+.main{
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    transition: all 0.35s ease-in-out;
+    background-color: #fafbfe;
+}
+
+#sidebar{
+    width: 70px;
+    min-width: 70px;
+    z-index: 1000;
+    transition: all 0.25s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    background: #000428;
+}
+
+#sidebar.expand {
+    width: 260px;
+    min-width: 260px;
+}
+
+#toggle-btn {
+    background: transparent;
+    cursor: pointer;
+    border: 0;
+    padding: 1rem 1.5rem;
+}
+
+#toggle-btn i {
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.sidebar-logo {
+    margin: auto 0;
+}
+.sidebar-logo a {
+    color: #fff;
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+#sidebar:not(.expand) .sidebar-logo,
+#sidebar:not(.expand) a.sidebar-link span {
+    display: none;
+}
+
+.sidebar-nav {
+    padding: 2rem 0;
+    flex: 1 1 auto;
+}
+
+a.sidebar-link {
+    padding: 0.625rem 1.625rem;
+    color: #fff;
+    display: block;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    border-left: 3px solid transparent ;
+}
+
+.sidebar-link i{
+    font-size: 1.1rem;
+    margin-right: 0.75rem;
+}
+
+a.sidebar-link:hover {
+    background: rgba(255, 255, 255, .075);
+    border-left: 3px solid #3b7ddd ;
+}
+
+a.sidebar-link.active {
+    background: rgba(59, 125, 221, 0.22);
+    border-left: 3px solid #3b7ddd;
+}
+
+.sidebar-item {
+    position: relative;
+}
+
+/* Standards picker — subtle lift on cards */
+.standards-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.standards-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0.75rem 2rem rgba(0, 4, 40, 0.12) !important;
+}
+.standards-icon-wrap {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, #004e92 0%, #000428 100%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.assessment-control-card {
+    border-left: 4px solid #3b7ddd !important;
+}
+.assessment-accordion .accordion-button:not(.collapsed) {
+    background: rgba(59, 125, 221, 0.08);
+    color: inherit;
+}
+.assessment-accordion .accordion-button:focus {
+    box-shadow: 0 0 0 0.2rem rgba(59, 125, 221, 0.25);
+}
+
+.results-hero-score {
+    width: 7.5rem;
+    height: 7.5rem;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #004e92 0%, #000428 100%);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    line-height: 1.1;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 14, 56, 0.35);
+}
+.results-hero-score span:first-child {
+    font-size: 1.75rem;
+}
+.results-hero-score span:last-child {
+    font-size: 0.65rem;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.results-status-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
