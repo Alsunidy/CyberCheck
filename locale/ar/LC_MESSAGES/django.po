@@ -82,6 +82,12 @@ msgstr "محفوظ"
 msgid "No data yet"
 msgstr "لا بيانات بعد"
 
+msgid "Standards you have started appear here. Open one to pick an assessment run, then view summary or print."
+msgstr "تظهر هنا المعايير التي بدأت تقييمها. افتح معياراً لاختيار جلسة تقييم، ثم اعرض الملخص أو الطباعة."
+
+msgid "You have not started any assessments. Go to Standards to begin, then your reports will appear here."
+msgstr "لم تبدأ أي تقييم بعد. انتقل إلى «المعايير» للبدء، ثم ستظهر تقاريرك هنا."
+
 msgid "Summary"
 msgstr "الملخص"
 
@@ -376,3 +382,160 @@ msgstr "الإجمالي: %(s)s%% متوافق"
 
 msgid "CyberCheck — for internal use. Evidence files are stored in the application; list above indicates attachment only."
 msgstr "CyberCheck — للاستخدام الداخلي. تُخزَّن ملفات الأدلة في التطبيق؛ ما يظهر أعلاه يشير إلى وجود مرفق فقط."
+
+msgid "summary for this assessment."
+msgstr "ملخص لهذا التقييم."
+
+msgid "Pick a framework. You can create multiple saved assessments per standard (e.g. for different companies)."
+msgstr "اختر إطاراً. يمكنك إنشاء عدة تقييمات محفوظة لكل معيار (مثلاً لشركات مختلفة)."
+
+msgid "assessments"
+msgstr "تقييمات"
+
+msgid "Assessments"
+msgstr "التقييمات"
+
+msgid "Open assessments"
+msgstr "فتح التقييمات"
+
+msgid "Go to standards"
+msgstr "الذهاب للمعايير"
+
+msgid "All assessments"
+msgstr "كل التقييمات"
+
+msgid "Delete this assessment and all saved answers for it?"
+msgstr "حذف هذا التقييم وجميع الإجابات المحفوظة له؟"
+
+msgid "New assessment name"
+msgstr "اسم التقييم الجديد"
+
+msgid "e.g. Company A — Q1 2026"
+msgstr "مثال: شركة أ — الربع الأول 2026"
+
+msgid "Create and start"
+msgstr "إنشاء والبدء"
+
+msgid "Updated"
+msgstr "آخر تحديث"
+
+msgid "Continue"
+msgstr "متابعة"
+
+msgid "Delete"
+msgstr "حذف"
+
+msgid "No assessments yet. Use the form above to create your first one for this standard."
+msgstr "لا توجد تقييمات بعد. استخدم النموذج أعلاه لإنشاء أول تقييم لهذا المعيار."
+
+msgid "Create a separate assessment for each company, branch, or time period. Each one keeps its own answers, evidence, and AI scores."
+msgstr "أنشئ تقييماً منفصلاً لكل شركة أو فرع أو فترة زمنية. كل تقييم يحتفظ بإجاباته وأدلته ودرجاته."
+
+msgid "Other assessments"
+msgstr "تقييمات أخرى"
+
+msgid "AI evidence score"
+msgstr "درجة مطابقة الدليل"
+
+msgid "Evidence: approved"
+msgstr "الدليل: مقبول"
+
+msgid "Evidence: partial"
+msgstr "الدليل: جزئي"
+
+msgid "Evidence: rejected"
+msgstr "الدليل: مرفوض"
+
+msgid "Evidence: pending"
+msgstr "الدليل: قيد المراجعة"
+
+msgid "Manual review"
+msgstr "مراجعة يدوية"
+
+msgid "AI evidence score:"
+msgstr "درجة مطابقة الدليل:"
+
+msgid "Matched keywords"
+msgstr "كلمات مطابقة"
+
+msgid "AI score"
+msgstr "درجة الذكاء الاصطناعي"
+
+msgid "Evidence review"
+msgstr "مراجعة الدليل"
+
+msgid "Approved"
+msgstr "مقبول"
+
+msgid "Rejected"
+msgstr "مرفوض"
+
+msgid "Pending"
+msgstr "معلّق"
+
+msgid "manual"
+msgstr "يدوي"
+
+msgid "Assessment:"
+msgstr "التقييم:"
+
+msgid "New assessment created. You can fill it in below."
+msgstr "تم إنشاء التقييم. يمكنك تعبئته أدناه."
+
+msgid "Assessment removed."
+msgstr "تم حذف التقييم."
+
+#, python-format
+msgid "Control %(cid)s — evidence: %(err)s"
+msgstr "الضابط %(cid)s — الدليل: %(err)s"
+
+msgid "Invalid file type. Allowed types: PDF, PNG, JPG, DOCX."
+msgstr "نوع الملف غير مسموح. الأنواع المسموحة: PDF، PNG، JPG، DOCX."
+
+msgid "Invalid stored evidence type. Allowed types: PDF, PNG, JPG, DOCX."
+msgstr "نوع ملف الدليل المحفوظ غير مسموح. الأنواع المسموحة: PDF، PNG، JPG، DOCX."
+
+msgid "English"
+msgstr "English"
+
+msgid "Arabic"
+msgstr "العربية"
+
+msgid "Toggle navigation menu"
+msgstr "فتح/إغلاق قائمة التنقل"
+
+msgid "Decorative illustration: compliance checklist"
+msgstr "رسم توضيحي: قائمة امتثال"
+
+msgid "NCA — National Cybersecurity Authority logo"
+msgstr "شعار هيئة الأمن السيبراني الوطنية"
+
+msgid "ISO framework logo"
+msgstr "شعار إطار ISO"
+
+msgid "NIST framework logo"
+msgstr "شعار إطار NIST"
+
+msgid "CIS framework logo"
+msgstr "شعار إطار CIS"
+
+msgid "Decorative product illustration"
+msgstr "رسم توضيحي للمنتج"
+
+msgid "name@example.com"
+msgstr "name@example.com"
+
+msgid "Illustration for the sign-in page"
+msgstr "رسم توضيحي لصفحة تسجيل الدخول"
+
+msgid "Illustration for the registration page"
+msgstr "رسم توضيحي لصفحة التسجيل"
+
+msgid "Keywords"
+msgstr "كلمات مفتاحية"
+
+msgid "AI evidence review"
+msgstr "مراجعة دليل ذكية"
+
+msgid "Meta"
+msgstr "بيانات وصفية"

@@ -1,0 +1,87 @@
+{% extends "compliance/base_compliance.html" %}
+{% load i18n %}
+
+{% trans "Delete this assessment and all saved answers for it?" as delete_assessment_confirm %}
+
+{% block title %}{{ standard.name }} — {% trans "Assessments" %} | {% trans "CyberCheck" %}{% endblock %}
+
+{% block compliance_assessment_active %}active{% endblock %}
+
+{% block compliance_content %}
+
+            <nav aria-label="breadcrumb" class="mb-3">
+                <ol class="breadcrumb mb-0 small">
+                    <li class="breadcrumb-item"><a href="{% url 'standards' %}" class="text-decoration-none">{% trans "Standards" %}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ standard.name }}</li>
+                </ol>
+            </nav>
+
+            <div class="row mb-4 align-items-start">
+                <div class="col-lg-8">
+                    <p class="text-uppercase small fw-semibold text-primary mb-1" style="letter-spacing: 0.06em;">{% trans "Assessments" %}</p>
+                    <h1 class="h2 mb-2 fw-semibold">{{ standard.name }}</h1>
+                    <p class="text-muted mb-0 lead fs-6">
+                        {% trans "Create a separate assessment for each company, branch, or time period. Each one keeps its own answers, evidence, and AI scores." %}
+                    </p>
+                </div>
+                <div class="col-lg-4 mt-3 mt-lg-0">
+                    <div class="rounded-4 p-3 border bg-white shadow-sm">
+                        <form method="post" class="mb-0">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="create">
+                            <label class="form-label small fw-semibold text-secondary" for="new-title">{% trans "New assessment name" %}</label>
+                            <input type="text" name="title" id="new-title" class="form-control form-control-sm mb-2" maxlength="200" placeholder="{% trans 'e.g. Company A — Q1 2026' %}">
+                            <button type="submit" class="btn btn-primary btn-sm rounded-pill w-100">
+                                <i class="bi bi-plus-lg me-1"></i>{% trans "Create and start" %}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            {% if runs %}
+            <div class="list-group shadow-sm rounded-4 overflow-hidden border mb-4">
+                {% for run in runs %}
+                <div class="list-group-item list-group-item-action d-flex flex-wrap align-items-center justify-content-between gap-3 py-3">
+                    <div>
+                        <div class="fw-semibold">{{ run.title }}</div>
+                        <div class="small text-muted">
+                            {% trans "Updated" %} {{ run.updated_at|date:"Y-m-d H:i" }}
+                        </div>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="{% url 'assessment' standard.id run.id %}" class="btn btn-outline-primary btn-sm rounded-pill">
+                            <i class="bi bi-pencil-square me-1"></i>{% trans "Continue" %}
+                        </a>
+                        <a href="{% url 'results' standard.id run.id %}" class="btn btn-outline-secondary btn-sm rounded-pill">
+                            <i class="bi bi-graph-up me-1"></i>{% trans "Summary" %}
+                        </a>
+                        <a href="{% url 'results_print' standard.id run.id %}" target="_blank" rel="noopener" class="btn btn-outline-dark btn-sm rounded-pill">
+                            <i class="bi bi-printer me-1"></i>{% trans "Print" %}
+                        </a>
+                        <form method="post" class="d-inline" onsubmit="return confirm('{{ delete_assessment_confirm|escapejs }}');">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="run_id" value="{{ run.id }}">
+                            <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill">
+                                <i class="bi bi-trash me-1"></i>{% trans "Delete" %}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-5 text-center text-muted">
+                    <i class="bi bi-folder2-open fs-1 d-block mb-3 opacity-50"></i>
+                    <p class="mb-0">{% trans "No assessments yet. Use the form above to create your first one for this standard." %}</p>
+                </div>
+            </div>
+            {% endif %}
+
+            <a href="{% url 'standards' %}" class="btn btn-outline-secondary rounded-pill px-4">
+                <i class="bi bi-arrow-left me-1"></i>{% trans "All standards" %}
+            </a>
+
+{% endblock %}

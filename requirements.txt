@@ -1,0 +1,17 @@
+# Django app (CyberCheck / compliance)
+# Install: pip install -r requirements.txt
+#
+# OCR: image evidence (PNG/JPG) needs the Tesseract *program* (not installed by pip).
+# Windows installer: https://github.com/UB-Mannheim/tesseract/wiki
+# After install: use "Add to PATH" OR set env TESSERACT_CMD=... and if needed:
+#   TESSDATA_PREFIX=C:\...\Tesseract-OCR\tessdata   (folder containing eng.traineddata)
+#   TESSERACT_OCR_LANG=eng
+#   TESSERACT_OCR_FALLBACK_LANGS=ara+eng   (only if primary returns nothing; optional)
+# Linux: apt install tesseract-ocr  |  macOS: brew install tesseract
+
+Django==6.0.2
+# PDF text extraction (successor to PyPDF2; pip name is "pypdf")
+pypdf==5.1.0
+python-docx==1.1.2
+pytesseract==0.3.13
+Pillow==11.1.0

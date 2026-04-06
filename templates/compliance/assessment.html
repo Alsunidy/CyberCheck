@@ -1,24 +1,34 @@
+{# =============================================================================
+   Assessment form template — نموذج التقييم لجلسة واحدة (AssessmentRun).
+   Context من الـ view: standard, assessment_run, domains, previous_map
+   Field names للـ POST: status_{id}, evidence_{id}, notes_{id} — لازم تطابق الـ view.
+   ============================================================================= #}
 {% extends "compliance/base_compliance.html" %}
 {% load compliance_extras i18n %}
 
-{% block title %}{{ standard.name }} — {% trans "Assessment" %} | {% trans "CyberCheck" %}{% endblock %}
+{% block title %}{{ assessment_run.title }} — {{ standard.name }} | {% trans "CyberCheck" %}{% endblock %}
 
+{# Sidebar: يخلي رابط "Report" يودّي لملخص نفس الجلسة #}
 {% block compliance_assessment_active %}active{% endblock %}
-{% block compliance_report_href %}{% url 'results' standard.id %}{% endblock %}
+{% block compliance_report_href %}{% url 'results' standard.id assessment_run.id %}{% endblock %}
 
 {% block compliance_content %}
 
+            {# --- Breadcrumb — مسار التنقل --- #}
             <nav aria-label="breadcrumb" class="mb-3">
                 <ol class="breadcrumb mb-0 small">
                     <li class="breadcrumb-item"><a href="{% url 'standards' %}" class="text-decoration-none">{% trans "Standards" %}</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ standard.name }}</li>
+                    <li class="breadcrumb-item"><a href="{% url 'standard_assessment_runs' standard.id %}" class="text-decoration-none">{{ standard.name }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ assessment_run.title }}</li>
                 </ol>
             </nav>
 
+            {# --- Page header — عنوان الصفحة وتلميح للمستخدم --- #}
             <div class="row mb-4 align-items-start">
                 <div class="col-lg-8">
                     <p class="text-uppercase small fw-semibold text-primary mb-1" style="letter-spacing: 0.06em;">{% trans "In progress" %}</p>
-                    <h1 class="h2 mb-2 fw-semibold">{{ standard.name }}</h1>
+                    <h1 class="h2 mb-2 fw-semibold">{{ assessment_run.title }}</h1>
+                    <p class="text-muted small mb-1">{{ standard.name }}</p>
                     <p class="text-muted mb-0 lead fs-6">{{ standard.description }}</p>
                 </div>
                 <div class="col-lg-4 mt-3 mt-lg-0">
@@ -31,9 +41,11 @@
                 </div>
             </div>
 
+            {# --- Main form — لازم multipart عشان رفع الملفات (enctype) --- #}
             <form method="post" enctype="multipart/form-data" class="assessment-form">
                 {% csrf_token %}
 
+                {# Accordion: كل domain = قسم؛ جوّاها loop على control_set — البنود من الـ DB #}
                 <div class="accordion assessment-accordion" id="assessmentDomains">
                     {% for domain in domains %}
                     <div class="accordion-item border-0 shadow-sm mb-3 rounded-4 overflow-hidden">
@@ -47,6 +59,7 @@
                         <div id="collapse-{{ domain.id }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" aria-labelledby="heading-{{ domain.id }}">
                             <div class="accordion-body bg-opacity-50 pt-2 pb-4" style="background: linear-gradient(180deg, rgba(59,125,221,0.06) 0%, transparent 120px);">
                                 {% for control in domain.control_set.all %}
+                                {# previous_map: آخر إجابة محفوظة لهذا البند في نفس الجلسة — فلتر get_item #}
                                 {% with prev=previous_map|get_item:control.id %}
                                 <div class="card assessment-control-card border-0 shadow-sm rounded-4 mb-3">
                                     <div class="card-body p-4">
@@ -91,6 +104,7 @@
                         </div>
                     </div>
                     {% empty %}
+                    {# لا domains في المعيار — نادرة؛ يظهر للمسؤول لو البيانات ناقصة #}
                     <div class="card border-0 shadow-sm rounded-4">
                         <div class="card-body p-5 text-center text-muted">
                             <i class="bi bi-inbox fs-1 d-block mb-3 opacity-50"></i>
@@ -100,9 +114,10 @@
                     {% endfor %}
                 </div>
 
+                {# --- Actions: رجوع لقائمة الجلسات + إرسال (يظهر إذا في domains) --- #}
                 <div class="d-flex flex-column flex-sm-row justify-content-between align-items-stretch align-items-sm-center gap-3 mt-4 mb-5 p-4 bg-white rounded-4 shadow-sm border">
-                    <a href="{% url 'standards' %}" class="btn btn-outline-secondary rounded-pill px-4 order-2 order-sm-1">
-                        <i class="bi bi-arrow-left me-1"></i> {% trans "Back to standards" %}
+                    <a href="{% url 'standard_assessment_runs' standard.id %}" class="btn btn-outline-secondary rounded-pill px-4 order-2 order-sm-1">
+                        <i class="bi bi-arrow-left me-1"></i> {% trans "All assessments" %}
                     </a>
                     {% if domains %}
                     <button type="submit" class="btn btn-primary rounded-pill px-5 py-2 fw-semibold order-1 order-sm-2">

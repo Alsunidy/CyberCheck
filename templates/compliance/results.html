@@ -1,16 +1,18 @@
 {% extends "compliance/base_compliance.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Results" %} — {{ standard.name }} | {% trans "CyberCheck" %}{% endblock %}
+{% block title %}{{ assessment_run.title }} — {% trans "Results" %} | {% trans "CyberCheck" %}{% endblock %}
 
 {% block compliance_report_active %}active{% endblock %}
+{% block compliance_report_href %}{% url 'results' standard.id assessment_run.id %}{% endblock %}
 
 {% block compliance_content %}
 
             <nav aria-label="breadcrumb" class="mb-3">
                 <ol class="breadcrumb mb-0 small">
                     <li class="breadcrumb-item"><a href="{% url 'standards' %}" class="text-decoration-none">{% trans "Standards" %}</a></li>
-                    <li class="breadcrumb-item"><a href="{% url 'assessment' standard.id %}" class="text-decoration-none">{{ standard.name }}</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'standard_assessment_runs' standard.id %}" class="text-decoration-none">{{ standard.name }}</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'assessment' standard.id assessment_run.id %}" class="text-decoration-none">{{ assessment_run.title }}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{% trans "Results" %}</li>
                 </ol>
             </nav>
@@ -21,7 +23,7 @@
                     <i class="bi bi-clipboard-data fs-1 text-muted d-block mb-3 opacity-50"></i>
                     <h1 class="h4 fw-semibold mb-2">{% trans "No saved answers yet" %}</h1>
                     <p class="text-muted mb-4">{% trans "Complete the assessment for this standard to see your compliance score and breakdown here." %}</p>
-                    <a href="{% url 'assessment' standard.id %}" class="btn btn-primary rounded-pill px-4">
+                    <a href="{% url 'assessment' standard.id assessment_run.id %}" class="btn btn-primary rounded-pill px-4">
                         <i class="bi bi-pencil-square me-2"></i>{% trans "Go to assessment" %}
                     </a>
                     <a href="{% url 'standards' %}" class="btn btn-outline-secondary rounded-pill px-4 ms-2">{% trans "All standards" %}</a>
@@ -41,7 +43,8 @@
                         <div class="col-lg">
                             <p class="text-uppercase small fw-semibold text-primary mb-1" style="letter-spacing: 0.06em;">{% trans "Report" %}</p>
                             <h1 class="h2 mb-2 fw-semibold">{% trans "Assessment results" %}</h1>
-                            <p class="text-muted mb-3 mb-lg-4">{{ standard.name }} — {% trans "summary of your latest submitted answers." %}</p>
+                            <p class="text-muted mb-1 fw-semibold">{{ assessment_run.title }}</p>
+                            <p class="text-muted mb-3 mb-lg-4">{{ standard.name }} — {% trans "summary for this assessment." %}</p>
                             <div class="row g-2 g-sm-3 small">
                                 <div class="col-6 col-sm-3">
                                     <div class="rounded-3 border bg-light p-3 text-center">
@@ -71,14 +74,17 @@
                         </div>
                     </div>
                     <div class="mt-4 pt-3 border-top d-flex flex-wrap gap-2 align-items-center">
-                        <a href="{% url 'assessment' standard.id %}" class="btn btn-primary rounded-pill px-4">
+                        <a href="{% url 'assessment' standard.id assessment_run.id %}" class="btn btn-primary rounded-pill px-4">
                             <i class="bi bi-arrow-repeat me-1"></i> {% trans "Edit assessment" %}
                         </a>
-                        <a href="{% url 'results_print' standard.id %}" target="_blank" rel="noopener" class="btn btn-outline-dark rounded-pill px-4">
+                        <a href="{% url 'standard_assessment_runs' standard.id %}" class="btn btn-outline-secondary rounded-pill px-4">
+                            <i class="bi bi-folder2-open me-1"></i> {% trans "Other assessments" %}
+                        </a>
+                        <a href="{% url 'results_print' standard.id assessment_run.id %}" target="_blank" rel="noopener" class="btn btn-outline-dark rounded-pill px-4">
                             <i class="bi bi-printer me-1"></i> {% trans "Print / PDF" %}
                         </a>
                         <a href="{% url 'standards' %}" class="btn btn-outline-secondary rounded-pill px-4">{% trans "All standards" %}</a>
-                        <a href="/dashboard" class="btn btn-outline-primary rounded-pill px-4">{% trans "Dashboard" %}</a>
+                        <a href="{% url 'dashboard' %}" class="btn btn-outline-primary rounded-pill px-4">{% trans "Dashboard" %}</a>
                     </div>
                 </div>
             </div>
@@ -90,16 +96,17 @@
                         <button class="accordion-button {% if not forloop.first %}collapsed{% endif %} fw-semibold py-3" type="button" data-bs-toggle="collapse" data-bs-target="#r-collapse-{{ forloop.counter }}" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="r-collapse-{{ forloop.counter }}">
                             <i class="bi bi-diagram-3 text-primary me-2"></i>
                             {{ domain.name }}
-                            <span class="badge bg-secondary bg-opacity-10 text-secondary ms-2 rounded-pill">{{ domain.results|length }} {% trans "items" %}</span>
+                            <span class="badge bg-secondary bg-opacity-10 text-secondary ms-2 rounded-pill">{{ domain.control_results|length }} {% trans "items" %}</span>
                         </button>
                     </h2>
                     <div id="r-collapse-{{ forloop.counter }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" aria-labelledby="r-heading-{{ forloop.counter }}">
                         <div class="accordion-body pt-2 pb-3 bg-opacity-50" style="background: linear-gradient(180deg, rgba(59,125,221,0.06) 0%, transparent 80px);">
-                            {% for result in domain.results %}
+                            {% for result in domain.control_results %}
                             <div class="card assessment-control-card border-0 shadow-sm rounded-4 mb-3">
                                 <div class="card-body p-4">
                                     <div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-2">
                                         <h3 class="h6 fw-semibold mb-0">{{ result.control.title }}</h3>
+                                        <div class="d-flex flex-wrap gap-1 justify-content-end align-items-center">
                                         {% if result.status == 'compliant' %}
                                         <span class="results-status-badge badge rounded-pill bg-success">{% trans "Compliant" %}</span>
                                         {% elif result.status == 'partial' %}
@@ -107,7 +114,26 @@
                                         {% else %}
                                         <span class="results-status-badge badge rounded-pill bg-danger">{% trans "Non-compliant" %}</span>
                                         {% endif %}
+                                        {% if result.review_status == 'approved' %}
+                                        <span class="badge rounded-pill bg-success bg-opacity-25 text-success border border-success border-opacity-25" title="{% trans 'AI evidence score' %}">{% trans "Evidence: approved" %}</span>
+                                        {% elif result.review_status == 'partial' %}
+                                        <span class="badge rounded-pill bg-warning bg-opacity-25 text-dark border border-warning border-opacity-25">{% trans "Evidence: partial" %}</span>
+                                        {% elif result.review_status == 'rejected' %}
+                                        <span class="badge rounded-pill bg-danger bg-opacity-25 text-danger border border-danger border-opacity-25">{% trans "Evidence: rejected" %}</span>
+                                        {% else %}
+                                        <span class="badge rounded-pill bg-secondary bg-opacity-25 text-secondary border border-secondary border-opacity-25">{% trans "Evidence: pending" %}</span>
+                                        {% endif %}
+                                        {% if result.review_status_admin_override %}
+                                        <span class="badge rounded-pill bg-dark bg-opacity-10 text-secondary">{% trans "Manual review" %}</span>
+                                        {% endif %}
+                                        </div>
                                     </div>
+                                    {% if result.ai_score is not None %}
+                                    <p class="small mb-2 text-muted">
+                                        <span class="fw-semibold text-body">{% trans "AI evidence score:" %}</span>
+                                        {% widthratio result.ai_score 1 100 %}%
+                                    </p>
+                                    {% endif %}
                                     <p class="text-muted small mb-3">{{ result.control.description }}</p>
                                     {% if result.notes %}
                                     <div class="rounded-3 bg-light border p-3 small mb-2">
@@ -119,6 +145,14 @@
                                     <div class="small">
                                         <i class="bi bi-paperclip me-1 text-primary"></i>
                                         <a href="{{ result.evidence_file.url }}" target="_blank" rel="noopener" class="text-decoration-none">{% trans "Evidence file" %}</a>
+                                    </div>
+                                    {% endif %}
+                                    {% if result.matched_keywords %}
+                                    <div class="small mt-2">
+                                        <span class="fw-semibold text-secondary">{% trans "Matched keywords" %}:</span>
+                                        {% for kw in result.matched_keywords %}
+                                        <span class="badge bg-primary bg-opacity-10 text-primary me-1">{{ kw }}</span>
+                                        {% endfor %}
                                     </div>
                                     {% endif %}
                                 </div>

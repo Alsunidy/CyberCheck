@@ -5,9 +5,9 @@
     <input type="hidden" name="next" value="{{ request.get_full_path }}">
     {% if LANGUAGE_CODE == 'ar' %}
     <input type="hidden" name="language" value="en">
-    <button type="submit" class="btn btn-sm btn-outline-secondary" lang="en">English</button>
+    <button type="submit" class="btn btn-sm btn-outline-secondary" lang="en">{% trans "English" %}</button>
     {% else %}
     <input type="hidden" name="language" value="ar">
-    <button type="submit" class="btn btn-sm btn-outline-secondary" lang="ar">العربية</button>
+    <button type="submit" class="btn btn-sm btn-outline-secondary" lang="ar">{% trans "Arabic" %}</button>
     {% endif %}
 </form>

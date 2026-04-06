@@ -1,5 +1,8 @@
 from django.core.management.base import BaseCommand
-from compliance.models import Standard, Domain, Control
+
+from compliance.models import Control, Domain, Standard
+from compliance.services.keywords import build_keywords_from_text
+
 
 class Command(BaseCommand):
     help = 'Seed NCA cybersecurity standard'
@@ -94,7 +97,8 @@ class Command(BaseCommand):
                 Control.objects.create(
                     domain=domain,
                     title=title,
-                    description=description
+                    description=description,
+                    keywords=build_keywords_from_text(title, description),
                 )
 
         self.stdout.write(self.style.SUCCESS('NCA standard seeded successfully!'))

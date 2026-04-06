@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from compliance.models import Standard, AssessmentResult, Control
+from compliance.models import AssessmentResult, AssessmentRun, Control, Standard
 
 def home(request):
     return render(request, 'pages/home.html')
@@ -45,12 +45,10 @@ def logout_view(request):
 def dashboard(request):
     user = request.user
 
-    # Standards the user has attempted
-    attempted_standards = Standard.objects.filter(
-        domain__control__assessmentresult__user=user
-    ).distinct()
+    # Standards the user has at least one assessment run for
+    attempted_standards = Standard.objects.filter(assessment_runs__user=user).distinct()
 
-    total_assessments = attempted_standards.count()
+    total_assessments = AssessmentRun.objects.filter(user=user).count()
 
     # Overall compliance rate across all results
     all_results = AssessmentResult.objects.filter(user=user)

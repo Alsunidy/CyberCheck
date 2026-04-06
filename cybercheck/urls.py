@@ -1,26 +1,31 @@
 """
-URL configuration for cybercheck project.
+Root URL configuration — جذر المشروع (كل المسارات تتجمّع هنا).
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/6.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+`urlpatterns` tells Django which view runs for each path.
+Django docs: https://docs.djangoproject.com/en/stable/topics/http/urls/
+
+Note: several `path("", include(...))` share the same prefix — order matters (الأول يفوز).
 """
-from django.contrib import admin
-from django.urls import path, include
+
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
+from django.urls import include, path
+
+# -----------------------------------------------------------------------------
+# URL table — جدول المسارات
+# -----------------------------------------------------------------------------
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('i18n/', include('django.conf.urls.i18n')),
-    path('', include('pages.urls')),
-    path('', include('compliance.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # Django admin site — لوحة الإدارة الافتراضية
+    path("admin/", admin.site.urls),
+    # Language switch (POST to set cookie) — تبديل اللغة عبر /i18n/setlang/
+    path("i18n/", include("django.conf.urls.i18n")),
+    # Public pages: home, login, dashboard, … — صفحات الموقع العامة
+    path("", include("pages.urls")),
+    # Compliance: standards, assessments, reports — مسارات الامتثال والتقييم
+    path("", include("compliance.urls")),
+]
+
+# Serve uploaded files in development only — ملفات الميديا أثناء التطوير (DEBUG)
+# In production use nginx/S3/etc. (بالإنتاج خدمها من السيرفر أو التخزين السحابي)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

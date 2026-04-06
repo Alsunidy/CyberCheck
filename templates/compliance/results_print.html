@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% trans "Report" %} — {{ standard.name }} | {% trans "CyberCheck" %}</title>
+    <title>{% trans "Report" %} — {{ assessment_run.title }} — {{ standard.name }} | {% trans "CyberCheck" %}</title>
     {% if LANGUAGE_CODE == 'ar' %}
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
     {% endif %}
@@ -152,17 +152,18 @@
 
     <div class="toolbar no-print">
         <button type="button" class="primary" onclick="window.print()">{% trans "Print" %}</button>
-        <a href="{% url 'results' standard.id %}">{% trans "Back to results" %}</a>
+        <a href="{% url 'results' standard.id assessment_run.id %}">{% trans "Back to results" %}</a>
         <a href="{% url 'reports' %}">{% trans "All reports" %}</a>
         <span class="hint">{% trans "For PDF: Print → choose \"Save as PDF\" / \"Microsoft Print to PDF\"." %}</span>
     </div>
 
     <header class="brand">
-        <img src="{% static 'images/logo.png' %}" alt="">
+        <img src="{% static 'images/logo.png' %}" alt="{% trans 'CyberCheck' %}">
         <h1>{% trans "CyberCheck — compliance assessment report" %}</h1>
     </header>
 
     <div class="meta">
+        <div><strong>{% trans "Assessment:" %}</strong> {{ assessment_run.title }}</div>
         <div><strong>{% trans "Standard:" %}</strong> {{ standard.name }}</div>
         <div><strong>{% trans "Prepared for:" %}</strong> {{ user.get_username }}</div>
         <div><strong>{% trans "Generated:" %}</strong> {{ generated_at|date:"Y-m-d H:i" }} ({{ generated_at|date:"e" }})</div>
@@ -199,18 +200,20 @@
 
     {% for domain in domains %}
     <h2>{{ domain.name }}</h2>
-    {% if domain.results %}
+    {% if domain.control_results %}
     <table>
         <thead>
             <tr>
-                <th style="width:28%">{% trans "Control" %}</th>
-                <th style="width:14%">{% trans "Status" %}</th>
-                <th style="width:38%">{% trans "Notes" %}</th>
-                <th style="width:10%">{% trans "Evidence" %}</th>
+                <th style="width:24%">{% trans "Control" %}</th>
+                <th style="width:12%">{% trans "Status" %}</th>
+                <th style="width:8%">{% trans "AI score" %}</th>
+                <th style="width:12%">{% trans "Evidence review" %}</th>
+                <th style="width:28%">{% trans "Notes" %}</th>
+                <th style="width:8%">{% trans "Evidence" %}</th>
             </tr>
         </thead>
         <tbody>
-            {% for result in domain.results %}
+            {% for result in domain.control_results %}
             <tr>
                 <td>
                     <strong>{{ result.control.title }}</strong>
@@ -224,6 +227,19 @@
                     {% else %}
                     <span class="status-bad">{% trans "Non-compliant" %}</span>
                     {% endif %}
+                </td>
+                <td>{% if result.ai_score is not None %}{% widthratio result.ai_score 1 100 %}%{% else %}—{% endif %}</td>
+                <td>
+                    {% if result.review_status == 'approved' %}
+                    <span class="status-ok">{% trans "Approved" %}</span>
+                    {% elif result.review_status == 'partial' %}
+                    <span class="status-warn">{% trans "Partial" %}</span>
+                    {% elif result.review_status == 'rejected' %}
+                    <span class="status-bad">{% trans "Rejected" %}</span>
+                    {% else %}
+                    {% trans "Pending" %}
+                    {% endif %}
+                    {% if result.review_status_admin_override %} ({% trans "manual" %}){% endif %}
                 </td>
                 <td>{% if result.notes %}{{ result.notes|linebreaksbr }}{% else %}—{% endif %}</td>
                 <td>{% if result.evidence_file %}{% trans "Yes" %}{% else %}—{% endif %}</td>
