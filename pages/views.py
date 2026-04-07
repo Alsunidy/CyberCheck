@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from compliance.models import AssessmentResult, AssessmentRun, Control, Standard
+from django.db.models import Count, Q, Max
+from compliance.models import Standard, AssessmentResult, AssessmentRun
 
 def home(request):
     return render(request, 'pages/home.html')
@@ -25,16 +26,8 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            if request.POST.get('remember_me'):
-                # Stay signed in for two weeks (uses persistent session cookie)
-                request.session.set_expiry(60 * 60 * 24 * 14)
-            else:
-                # Session ends when the browser is closed
-                request.session.set_expiry(0)
+            request.session.set_expiry(60 * 60 * 24 * 14 if request.POST.get('remember_me') else 0)
             return redirect('dashboard')
-        else:
-            print("Login failed for user:", username)  # Debugging statement
-            pass
     return render(request, 'registration/login.html')
 
 def logout_view(request):
@@ -45,24 +38,40 @@ def logout_view(request):
 def dashboard(request):
     user = request.user
 
-    # Standards the user has at least one assessment run for
-    attempted_standards = Standard.objects.filter(assessment_runs__user=user).distinct()
+    # Fetch standards and calculate progress based on the user's latest AssessmentRun per standard
+    standards_data = Standard.objects.annotate(
+        total_cnt=Count('domain__control', distinct=True),
+        # Count how many unique controls the user has EVER answered for this standard
+        answered_cnt=Count(
+            'assessment_runs__results__control',
+            filter=Q(assessment_runs__user=user),
+            distinct=True
+        )
+    )
 
-    total_assessments = AssessmentRun.objects.filter(user=user).count()
-
-    # Overall compliance rate across all results
-    all_results = AssessmentResult.objects.filter(user=user)
-    total_controls = all_results.count()
-    compliant_controls = all_results.filter(status='compliant').count()
-    compliance_rate = round((compliant_controls / total_controls) * 100) if total_controls > 0 else 0
-
-    # Pending = standards not yet started
+    # Summary Card Logic
     total_standards = Standard.objects.count()
-    pending = total_standards - total_assessments
+    completed_count = 0
+    pending_count = 0
 
-    return render(request, 'pages/dashboard.html', {
-        'total_assessments': total_assessments,
-        'compliance_rate': compliance_rate,
-        'pending': pending,
+    for s in standards_data:
+        if s.total_cnt > 0:
+            if s.answered_cnt >= s.total_cnt:
+                completed_count += 1
+            elif s.answered_cnt > 0:
+                pending_count += 1
+
+    # Overall Compliance Rate (Global across all user results)
+    results = AssessmentResult.objects.filter(user=user)
+    total_ans = results.count()
+    compliant_ans = results.filter(status='compliant').count()
+    compliance_rate = round((compliant_ans / total_ans) * 100) if total_ans > 0 else 0
+
+    context = {
         'total_standards': total_standards,
-    })
+        'completed_count': completed_count,
+        'pending_count': pending_count,
+        'compliance_rate': compliance_rate,
+        'all_assessments': standards_data,
+    }
+    return render(request, 'pages/dashboard.html', context)

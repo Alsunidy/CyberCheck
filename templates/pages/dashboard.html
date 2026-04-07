@@ -1,6 +1,5 @@
 {% load static i18n %}
 {% get_current_language as LANGUAGE_CODE %}
-<!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}">
 <head>
     <meta charset="utf-8">
@@ -50,7 +49,7 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="{% url 'standards' %}" class="sidebar-link">
+                <a href="/standards" class="sidebar-link">
                     <i class="bi bi-clipboard2-check"></i>
                     <span>{% trans "Assessment" %}</span>
                 </a>
@@ -71,56 +70,174 @@
     </aside>
 
     <div class="main p-3">
+
         <div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">{% trans "Dashboard" %}</h1>
+        <a href="{% url 'reports' %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="bi bi-download me-1"></i> {% trans "View Reports" %}
+        </a>
+    </div>
 
-            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0">{% trans "Dashboard" %}</h1>
-            </div>
+    <div class="row">
 
-            <div class="row">
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{% trans "Total Assessments" %}</div>
-                            <div class="h5 mb-0 font-weight-bold">{{ total_assessments }}</div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{% trans "Total Standards" %}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_standards }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-layers fs-2 text-gray-300"></i>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-info shadow h-100 py-2">
-                        <div class="card-body">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">{% trans "Compliance Rate" %}</div>
-                            <div class="h5 mb-0 font-weight-bold">{{ compliance_rate }}%</div>
-                            <div class="progress mt-2">
-                                <div class="progress-bar bg-info" style="width: {{ compliance_rate }}%"></div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ compliance_rate }}%</div>
+                                </div>
+                                <div class="col">
+                                    <div class="progress progress-sm mr-2" style="height: 8px;">
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: {{ compliance_rate }}%"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-warning shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">{% trans "Pending Standards" %}</div>
-                            <div class="h5 mb-0 font-weight-bold">{{ pending }}</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-success shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">{% trans "Total Standards" %}</div>
-                            <div class="h5 mb-0 font-weight-bold">{{ total_standards }}</div>
+                        <div class="col-auto">
+                            <i class="bi bi-shield-check fs-2 text-gray-300"></i>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">{% trans "Completed" %}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ completed_count }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-check-circle fs-2 text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">{% trans "Pending" %}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ pending_count }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-hourglass-split fs-2 text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-8 col-lg-7">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">{% trans "Assessment Progress" %}</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table align-middle" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>{% trans "Standard Name" %}</th>
+                                    <th>{% trans "Progress" %}</th>
+                                    <th>{% trans "Status" %}</th>
+                                    <th>{% trans "Action" %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for std in all_assessments %}
+                                <tr>
+                                    <td class="fw-bold">{{ std.name }}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            {% if std.total_cnt > 0 %}
+                                                {% widthratio std.answered_cnt std.total_cnt 100 as pct %}
+                                            {% else %}
+                                                {% widthratio 0 1 100 as pct %}
+                                            {% endif %}
+                                            <span class="small me-2 fw-bold text-primary">{{ pct }}%</span>
+                                            <div class="progress w-100" style="height: 6px;">
+                                                <div class="progress-bar" role="progressbar" style="width: {{ pct }}%"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {% if std.total_cnt > 0 and std.answered_cnt == std.total_cnt %}
+                                            <span class="badge bg-success">{% trans "Completed" %}</span>
+                                        {% elif std.answered_cnt > 0 %}
+                                            <span class="badge bg-warning text-dark">{% trans "In Progress" %}</span>
+                                        {% else %}
+                                            <span class="badge bg-light text-dark border">{% trans "Not Started" %}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'standard_assessment_runs' std.id %}" class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted">{% trans "No assessments found." %}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-lg-5">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">{% trans "Security Overview" %}</h6>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small">{% trans "Your overall compliance score across all frameworks:" %}</p>
+                    <div class="text-center">
+                        <h2 class="display-4 fw-bold text-primary">{{ compliance_rate }}%</h2>
+                        <a href="{% url 'standards' %}" class="btn btn-primary rounded-pill mt-3">
+                            <i class="bi bi-plus-lg me-1"></i> {% trans "Start New" %}
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+    </div>
+</div>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{% static 'js/index.js' %}"></script>
