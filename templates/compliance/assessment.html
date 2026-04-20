@@ -1,10 +1,9 @@
-{# =============================================================================
-   Assessment form template — نموذج التقييم لجلسة واحدة (AssessmentRun).
-   Context من الـ view: standard, assessment_run, domains, previous_map
-   Field names للـ POST: status_{id}, evidence_{id}, notes_{id} — لازم تطابق الـ view.
-   ============================================================================= #}
 {% extends "compliance/base_compliance.html" %}
 {% load compliance_extras i18n %}
+{% comment %}
+Assessment form — جلسة AssessmentRun. Context: standard, assessment_run, domains, previous_map
+POST fields: status_CONTROLID, evidence_CONTROLID, notes_CONTROLID (must match the view).
+{% endcomment %}
 
 {% block title %}{{ assessment_run.title }} — {{ standard.name }} | {% trans "CyberCheck" %}{% endblock %}
 
