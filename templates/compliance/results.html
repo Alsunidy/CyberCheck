@@ -141,6 +141,12 @@
                                         {{ result.notes|linebreaksbr }}
                                     </div>
                                     {% endif %}
+                                    {% if result.report_file %}
+                                    <div class="small mb-1">
+                                        <i class="bi bi-file-earmark-text me-1 text-primary"></i>
+                                        <a href="{{ result.report_file.url }}" target="_blank" rel="noopener" class="text-decoration-none">{% trans "Report file" %}</a>
+                                    </div>
+                                    {% endif %}
                                     {% if result.evidence_file %}
                                     <div class="small">
                                         <i class="bi bi-paperclip me-1 text-primary"></i>

@@ -209,6 +209,7 @@
                 <th style="width:8%">{% trans "AI score" %}</th>
                 <th style="width:12%">{% trans "Evidence review" %}</th>
                 <th style="width:28%">{% trans "Notes" %}</th>
+                <th style="width:8%">{% trans "Report" %}</th>
                 <th style="width:8%">{% trans "Evidence" %}</th>
             </tr>
         </thead>
@@ -242,6 +243,7 @@
                     {% if result.review_status_admin_override %} ({% trans "manual" %}){% endif %}
                 </td>
                 <td>{% if result.notes %}{{ result.notes|linebreaksbr }}{% else %}—{% endif %}</td>
+                <td>{% if result.report_file %}{% trans "Yes" %}{% else %}—{% endif %}</td>
                 <td>{% if result.evidence_file %}{% trans "Yes" %}{% else %}—{% endif %}</td>
             </tr>
             {% endfor %}
@@ -255,7 +257,7 @@
     {% endif %}
 
     <footer>
-        {% trans "CyberCheck — for internal use. Evidence files are stored in the application; list above indicates attachment only." %}
+        {% trans "CyberCheck — for internal use. Report and evidence files are stored in the application; list above indicates attachment only." %}
     </footer>
 
 </body>

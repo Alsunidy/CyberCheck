@@ -77,6 +77,7 @@ class AssessmentResult(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES)
     notes = models.TextField(blank=True)
+    report_file = models.FileField(upload_to='reports/', blank=True, null=True)
     evidence_file = models.FileField(upload_to='evidence/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

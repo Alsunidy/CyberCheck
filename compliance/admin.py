@@ -94,7 +94,7 @@ class AssessmentRunAdmin(admin.ModelAdmin):
 @admin.register(AssessmentResult)
 class AssessmentResultAdmin(admin.ModelAdmin):
     """
-    Saved answer per control inside a run — نتيجة لكل بند (حالة + ملاحظات + دليل).
+    Saved answer per control inside a run — نتيجة لكل بند (حالة + ملاحظات + ريبورت + دليل).
     Inline shows validation logs without opening another admin page.
     """
 
@@ -123,6 +123,7 @@ class AssessmentResultAdmin(admin.ModelAdmin):
                     "control",
                     "status",
                     "notes",
+                    "report_file",
                     "evidence_file",
                 ),
             },

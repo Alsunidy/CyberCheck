@@ -2,7 +2,7 @@
 {% load compliance_extras i18n %}
 {% comment %}
 Assessment form — جلسة AssessmentRun. Context: standard, assessment_run, domains, previous_map
-POST fields: status_CONTROLID, evidence_CONTROLID, notes_CONTROLID (must match the view).
+POST fields: status_CONTROLID, report_CONTROLID, evidence_CONTROLID, notes_CONTROLID (must match the view).
 {% endcomment %}
 
 {% block title %}{{ assessment_run.title }} — {{ standard.name }} | {% trans "CyberCheck" %}{% endblock %}
@@ -34,7 +34,7 @@ POST fields: status_CONTROLID, evidence_CONTROLID, notes_CONTROLID (must match t
                     <div class="rounded-4 p-3 border bg-white shadow-sm">
                         <div class="d-flex align-items-center gap-2 text-muted small">
                             <i class="bi bi-info-circle text-primary"></i>
-                            <span>{% trans "Upload evidence and notes are saved when you submit. You can return later to update answers." %}</span>
+                            <span>{% trans "Upload report and evidence with notes, then submit. You can return later to update answers." %}</span>
                         </div>
                     </div>
                 </div>
@@ -79,12 +79,24 @@ POST fields: status_CONTROLID, evidence_CONTROLID, notes_CONTROLID (must match t
                                                     <option value="non_compliant" {% if prev and prev.status == 'non_compliant' %}selected{% endif %}>{% trans "Non-compliant" %}</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-6 col-lg-8">
+                                            <div class="col-md-6 col-lg-4">
+                                                <label class="form-label small fw-semibold text-secondary" for="report_{{ control.id }}">{% trans "Report (optional)" %}</label>
+                                                <input type="file" name="report_{{ control.id }}" id="report_{{ control.id }}" class="form-control form-control-sm">
+                                                <div class="form-text">{% trans "Attach the control report document." %}</div>
+                                                {% if prev and prev.report_file %}
+                                                <div class="form-text">
+                                                    <i class="bi bi-paperclip me-1"></i>{% trans "Current report:" %}
+                                                    <a href="{{ prev.report_file.url }}" target="_blank" rel="noopener">{{ prev.report_file.name|default:"file" }}</a>
+                                                    <span class="text-muted">{% trans "— upload a new file to replace." %}</span>
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-md-6 col-lg-4">
                                                 <label class="form-label small fw-semibold text-secondary" for="evidence_{{ control.id }}">{% trans "Evidence (optional)" %}</label>
                                                 <input type="file" name="evidence_{{ control.id }}" id="evidence_{{ control.id }}" class="form-control form-control-sm">
                                                 {% if prev and prev.evidence_file %}
                                                 <div class="form-text">
-                                                    <i class="bi bi-paperclip me-1"></i>{% trans "Current:" %}
+                                                    <i class="bi bi-paperclip me-1"></i>{% trans "Current evidence:" %}
                                                     <a href="{{ prev.evidence_file.url }}" target="_blank" rel="noopener">{{ prev.evidence_file.name|default:"file" }}</a>
                                                     <span class="text-muted">{% trans "— upload a new file to replace." %}</span>
                                                 </div>

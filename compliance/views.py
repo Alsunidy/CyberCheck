@@ -127,21 +127,23 @@ def assessment(request, standard_id, run_id):
                 )
         upload_errors: list[tuple[int, str]] = []
         for control in controls:
+            report = request.FILES.get(f'report_{control.id}')
             evidence = request.FILES.get(f'evidence_{control.id}')
-            if not evidence:
-                continue
-            try:
-                validate_evidence_upload(evidence)
-            except ValidationError as exc:
-                for msg in exc.messages:
-                    upload_errors.append((control.id, str(msg)))
+            for label, uploaded in (('report', report), ('evidence', evidence)):
+                if not uploaded:
+                    continue
+                try:
+                    validate_evidence_upload(uploaded)
+                except ValidationError as exc:
+                    for msg in exc.messages:
+                        upload_errors.append((control.id, label, str(msg)))
 
         if upload_errors:
-            for control_id, err in upload_errors:
+            for control_id, field_label, err in upload_errors:
                 messages.error(
                     request,
-                    _('Control %(cid)s — evidence: %(err)s')
-                    % {'cid': control_id, 'err': err},
+                    _('Control %(cid)s — %(field)s: %(err)s')
+                    % {'cid': control_id, 'field': field_label, 'err': err},
                 )
             return render(
                 request,
@@ -154,12 +156,15 @@ def assessment(request, standard_id, run_id):
                 for control in controls:
                     status = request.POST.get(f'status_{control.id}')
                     notes = request.POST.get(f'notes_{control.id}', '')
+                    report = request.FILES.get(f'report_{control.id}')
                     evidence = request.FILES.get(f'evidence_{control.id}')
                     defaults = {
                         'user': request.user,
                         'status': status,
                         'notes': notes,
                     }
+                    if report:
+                        defaults['report_file'] = report
                     if evidence:
                         defaults['evidence_file'] = evidence
                     result, _created = AssessmentResult.objects.update_or_create(
