@@ -1,245 +1,405 @@
 {% load static i18n %}
 {% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% trans "Dashboard" %} — {% trans "CyberCheck" %}</title>
-    {% if LANGUAGE_CODE == 'ar' %}
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
-    {% endif %}
-    <link rel="stylesheet" href="{% static 'css/DB.css' %}">
-    {% if LANGUAGE_CODE == 'ar' %}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
-    {% else %}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    {% endif %}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% trans "Dashboard" %} — CyberCheck</title>
+
+  {% if LANGUAGE_CODE == 'ar' %}
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  {% endif %}
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/DB.css' %}">
 </head>
 <body class="{% if LANGUAGE_CODE == 'ar' %}lang-ar{% endif %}">
 
-<nav class="navbar navbar-expand navbar-light bg-light static-top shadow">
-    <div class="container">
-        <a class="navbar-brand" href="/"><img src="{% static 'images/logo.png' %}" height="50" alt="{% trans 'CyberCheck' %}"></a>
-        <div class="collapse navbar-collapse justify-content-end align-items-center">
-            <ul class="navbar-nav align-items-center flex-row flex-wrap gap-1">
-                <li class="nav-item"><a class="nav-link" href="/">{% trans "Home" %}</a></li>
-                <li class="nav-item"><a class="nav-link" href="/logout">{% trans "Logout" %} ({{ user.username }})</a></li>
-                <li class="nav-item">{% include "includes/language_switcher.html" %}</li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
 <div class="wrapper">
-    <aside id="sidebar">
-        <div class="d-flex">
-            <button id="toggle-btn" type="button" aria-label="{% trans 'Toggle sidebar' %}">
-                <i class="bi bi-columns-gap"></i>
-            </button>
-            <div class="sidebar-logo">
-                <a href="/dashboard">{% trans "CyberCheck" %}</a>
-            </div>
-        </div>
-        <ul class="sidebar-nav">
-            <li class="sidebar-item">
-                <a href="/dashboard" class="sidebar-link active">
-                    <i class="bi bi-list-task"></i>
-                    <span>{% trans "Dashboard" %}</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a href="/standards" class="sidebar-link">
-                    <i class="bi bi-clipboard2-check"></i>
-                    <span>{% trans "Assessment" %}</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a href="{% url 'reports' %}" class="sidebar-link">
-                    <i class="bi bi-layout-text-sidebar-reverse"></i>
-                    <span>{% trans "Report" %}</span>
-                </a>
-            </li>
-        </ul>
-        <div class="sidebar-footer">
-            <a href="/dashboard" class="sidebar-link">
-                <i class="bi bi-person-circle"></i>
-                <span>{{ user.username }}</span>
-            </a>
-        </div>
-    </aside>
 
-    <div class="main p-3">
+  {# ── Sidebar ── #}
+  <aside id="sidebar">
+    <div class="sidebar-header">
+      <button id="toggle-btn" type="button" aria-label="{% trans 'Toggle sidebar' %}">
+        <i class="bi bi-layout-sidebar-inset"></i>
+      </button>
+      <div class="sidebar-logo">
+        <a href="/dashboard">Cyber<span>Check</span></a>
+      </div>
+    </div>
 
-        <div class="container-fluid">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{% trans "Dashboard" %}</h1>
-        <a href="{% url 'reports' %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-            <i class="bi bi-download me-1"></i> {% trans "View Reports" %}
+    <nav class="sidebar-nav">
+      <span class="sidebar-section-label">{% trans "Main" %}</span>
+
+      <a href="/dashboard" class="sidebar-link active">
+        <i class="bi bi-squares-fill"></i>
+        <span>{% trans "Dashboard" %}</span>
+      </a>
+      <a href="{% url 'standards' %}" class="sidebar-link">
+        <i class="bi bi-clipboard2-check"></i>
+        <span>{% trans "Assessments" %}</span>
+      </a>
+      <a href="{% url 'reports' %}" class="sidebar-link">
+        <i class="bi bi-bar-chart-line"></i>
+        <span>{% trans "Reports" %}</span>
+      </a>
+
+      <span class="sidebar-section-label" style="margin-top:16px">{% trans "Account" %}</span>
+
+      <a href="/" class="sidebar-link">
+        <i class="bi bi-house"></i>
+        <span>{% trans "Home" %}</span>
+      </a>
+      <a href="/logout" class="sidebar-link">
+        <i class="bi bi-box-arrow-left"></i>
+        <span>{% trans "Logout" %}</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="/dashboard" class="sidebar-link">
+        <i class="bi bi-person-circle"></i>
+        <span>{{ user.username }}</span>
+      </a>
+    </div>
+  </aside>
+  {# ── End sidebar ── #}
+
+  <div class="main">
+
+    {# ── Topbar ── #}
+    <header class="topbar">
+      <img src="{% static 'images/logo.png' %}" alt="CyberCheck" style="height:34px">
+      <nav class="topbar-nav">
+        {% include "includes/language_switcher.html" %}
+        <a href="/logout" class="btn btn-ghost btn-sm">
+          <i class="bi bi-box-arrow-left"></i>
+          {% trans "Logout" %} ({{ user.username }})
         </a>
-    </div>
+      </nav>
+    </header>
 
-    <div class="row">
+    <div class="page-content">
 
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{% trans "Total Standards" %}</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_standards }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="bi bi-layers fs-2 text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      {# ── Page header ── #}
+      <div class="page-header animate-fade-up">
+        <div class="eyebrow">{% trans "Overview" %}</div>
+        <h1>{% trans "Dashboard" %}</h1>
+        <p class="subtitle">
+          {% trans "Monitor your compliance posture across all cybersecurity frameworks." %}
+        </p>
+      </div>
+
+      {# ── 3 stat cards ── #}
+      <div class="stat-grid animate-fade-up delay-1"
+           style="grid-template-columns:repeat(3,1fr)">
+
+        {# Total standards #}
+        <div class="stat-card blue">
+          <div class="stat-card-icon"><i class="bi bi-layers"></i></div>
+          <div class="stat-card-label">{% trans "Total Standards" %}</div>
+          <div class="stat-card-value">{{ total_standards }}</div>
+          <div class="stat-card-sub">
+            <i class="bi bi-grid"></i> {% trans "Available frameworks" %}
+          </div>
         </div>
 
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-info shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">{% trans "Compliance Rate" %}</div>
-                            <div class="row no-gutters align-items-center">
-                                <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ compliance_rate }}%</div>
-                                </div>
-                                <div class="col">
-                                    <div class="progress progress-sm mr-2" style="height: 8px;">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: {{ compliance_rate }}%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="bi bi-shield-check fs-2 text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        {# Compliance rate #}
+        <div class="stat-card green">
+          <div class="stat-card-icon"><i class="bi bi-shield-check"></i></div>
+          <div class="stat-card-label">{% trans "Compliance Rate" %}</div>
+          <div class="stat-card-value">{{ compliance_rate }}%</div>
+          <div class="stat-progress" style="margin-top:6px">
+            <div class="stat-progress-fill js-fill"
+                 data-width="{{ compliance_rate }}"
+                 style="width:0;background:var(--green)"></div>
+          </div>
         </div>
 
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">{% trans "Completed" %}</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ completed_count }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="bi bi-check-circle fs-2 text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        {# Completed #}
+        <div class="stat-card teal">
+          <div class="stat-card-icon"><i class="bi bi-check-circle"></i></div>
+          <div class="stat-card-label">{% trans "Completed" %}</div>
+          <div class="stat-card-value">{{ completed_count }}</div>
+          <div class="stat-card-sub">
+            <i class="bi bi-award"></i> {% trans "Fully assessed" %}
+          </div>
         </div>
 
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">{% trans "Pending" %}</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ pending_count }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="bi bi-hourglass-split fs-2 text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
+      </div>
+
+      {# ── Main body — full-width single column ── #}
+      <div style="display:flex;flex-direction:column;gap:24px;margin-top:8px">
+
+        {# ── Assessment progress table ── #}
+        <div class="animate-fade-up delay-2">
+
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+            <div>
+              <h2 style="font-family:var(--font-display);font-size:1.05rem;font-weight:700;
+                          color:var(--text-primary);margin:0 0 2px">
+                {% trans "Assessment Progress" %}
+              </h2>
+              <p style="font-size:.8rem;color:var(--text-muted);margin:0">
+                {% trans "Answered controls across all standards." %}
+              </p>
             </div>
-        </div>
-    </div>
+            <a href="{% url 'standards' %}" class="btn btn-primary btn-sm">
+              <i class="bi bi-plus-lg"></i> {% trans "New Assessment" %}
+            </a>
+          </div>
 
-    <div class="row">
-        <div class="col-xl-8 col-lg-7">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">{% trans "Assessment Progress" %}</h6>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table align-middle" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>{% trans "Standard Name" %}</th>
-                                    <th>{% trans "Progress" %}</th>
-                                    <th>{% trans "Status" %}</th>
-                                    <th>{% trans "Action" %}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for std in all_assessments %}
-                                <tr>
-                                    <td class="fw-bold">{{ std.name }}</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            {% if std.total_cnt > 0 %}
-                                                {% widthratio std.answered_cnt std.total_cnt 100 as pct %}
-                                            {% else %}
-                                                {% widthratio 0 1 100 as pct %}
-                                            {% endif %}
-                                            <span class="small me-2 fw-bold text-primary">{{ pct }}%</span>
-                                            <div class="progress w-100" style="height: 6px;">
-                                                <div class="progress-bar" role="progressbar" style="width: {{ pct }}%"></div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        {% if std.total_cnt > 0 and std.answered_cnt == std.total_cnt %}
-                                            <span class="badge bg-success">{% trans "Completed" %}</span>
-                                        {% elif std.answered_cnt > 0 %}
-                                            <span class="badge bg-warning text-dark">{% trans "In Progress" %}</span>
-                                        {% else %}
-                                            <span class="badge bg-light text-dark border">{% trans "Not Started" %}</span>
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        <a href="{% url 'standard_assessment_runs' std.id %}" class="btn btn-sm btn-outline-primary">
-                                            <i class="bi bi-eye"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                {% empty %}
-                                <tr>
-                                    <td colspan="4" class="text-center text-muted">{% trans "No assessments found." %}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+          <div class="cc-table-wrap">
+            <table class="cc-table">
+              <thead>
+                <tr>
+                  <th>{% trans "Standard" %}</th>
+                  <th style="min-width:160px">{% trans "Progress" %}</th>
+                  <th>{% trans "Answered" %}</th>
+                  <th>{% trans "Status" %}</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for std in all_assessments %}
+                <tr>
+                  {# Name #}
+                  <td>
+                    <div style="display:flex;align-items:center;gap:10px">
+                      <div style="width:34px;height:34px;border-radius:var(--radius-sm);flex-shrink:0;
+                                  background:linear-gradient(135deg,var(--navy),var(--navy-light));
+                                  display:flex;align-items:center;justify-content:center">
+                        <i class="bi bi-shield" style="color:var(--blue-vivid);font-size:.85rem"></i>
+                      </div>
+                      <span style="font-weight:600;font-size:.875rem">{{ std.name }}</span>
                     </div>
-                </div>
-            </div>
-        </div>
+                  </td>
 
-        <div class="col-xl-4 col-lg-5">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">{% trans "Security Overview" %}</h6>
-                </div>
-                <div class="card-body">
-                    <p class="text-muted small">{% trans "Your overall compliance score across all frameworks:" %}</p>
-                    <div class="text-center">
-                        <h2 class="display-4 fw-bold text-primary">{{ compliance_rate }}%</h2>
-                        <a href="{% url 'standards' %}" class="btn btn-primary rounded-pill mt-3">
-                            <i class="bi bi-plus-lg me-1"></i> {% trans "Start New" %}
-                        </a>
+                  {# Progress bar #}
+                  <td>
+                    {% if std.total_cnt > 0 %}
+                      {% widthratio std.answered_cnt std.total_cnt 100 as pct %}
+                    {% else %}
+                      {% widthratio 0 1 100 as pct %}
+                    {% endif %}
+                    <div style="display:flex;align-items:center;gap:8px">
+                      <div class="card-progress-bar" style="flex:1">
+                        <div class="card-progress-fill js-fill"
+                             data-width="{{ pct }}"
+                             style="width:0"></div>
+                      </div>
+                      <span style="font-size:.75rem;font-weight:700;
+                                   color:var(--text-secondary);white-space:nowrap">
+                        {{ pct }}%
+                      </span>
                     </div>
-                </div>
-            </div>
+                  </td>
+
+                  {# Answered count #}
+                  <td>
+                    <span style="font-size:.85rem;color:var(--text-secondary)">
+                      {{ std.answered_cnt }}&thinsp;/&thinsp;{{ std.total_cnt }}
+                    </span>
+                  </td>
+
+                  {# Status badge #}
+                  <td>
+                    {% if std.total_cnt > 0 and std.answered_cnt == std.total_cnt %}
+                      <span class="badge badge-green">
+                        <i class="bi bi-check-lg"></i> {% trans "Complete" %}
+                      </span>
+                    {% elif std.answered_cnt > 0 %}
+                      <span class="badge badge-amber">
+                        <i class="bi bi-clock"></i> {% trans "In Progress" %}
+                      </span>
+                    {% else %}
+                      <span class="badge badge-muted">{% trans "Not Started" %}</span>
+                    {% endif %}
+                  </td>
+
+                  {# Action #}
+                  <td style="text-align:end">
+                    <a href="{% url 'standard_assessment_runs' std.id %}"
+                       class="btn btn-secondary btn-sm">
+                      {% trans "Open" %} <i class="bi bi-arrow-right"></i>
+                    </a>
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="5"
+                      style="text-align:center;padding:48px 24px;color:var(--text-muted)">
+                    <i class="bi bi-inbox"
+                       style="font-size:2rem;display:block;margin-bottom:10px;opacity:.5"></i>
+                    <div style="font-weight:600;margin-bottom:6px;color:var(--text-secondary)">
+                      {% trans "No assessments yet" %}
+                    </div>
+                    <div style="font-size:.82rem;margin-bottom:16px">
+                      {% trans "Pick a standard to get started." %}
+                    </div>
+                    <a href="{% url 'standards' %}" class="btn btn-primary btn-sm">
+                      <i class="bi bi-plus-lg"></i> {% trans "Start First Assessment" %}
+                    </a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
-    </div>
-</div>
-    </div>
-</div>
 
+        {# ── Bottom row: Quick actions  +  Compliance breakdown ── #}
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px"
+             class="animate-fade-up delay-3">
 
+          {# Quick actions #}
+          <div style="background:var(--surface);border:1px solid var(--border);
+                      border-radius:var(--radius-lg);padding:22px;box-shadow:var(--shadow-sm)">
+            <h3 style="font-family:var(--font-display);font-size:.95rem;font-weight:700;
+                        color:var(--text-primary);margin:0 0 4px">
+              {% trans "Quick Actions" %}
+            </h3>
+            <p style="font-size:.8rem;color:var(--text-muted);margin:0 0 16px">
+              {% trans "Jump straight to what you need." %}
+            </p>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <a href="{% url 'standards' %}"
+                 class="btn btn-secondary"
+                 style="justify-content:flex-start;padding:10px 14px">
+                <i class="bi bi-clipboard2-check"
+                   style="color:var(--blue);font-size:1rem"></i>
+                <div style="text-align:start">
+                  <div style="font-weight:600;font-size:.875rem">
+                    {% trans "Start Assessment" %}
+                  </div>
+                  <div style="font-size:.75rem;color:var(--text-muted);font-weight:400">
+                    {% trans "Choose a standard and begin" %}
+                  </div>
+                </div>
+              </a>
+              <a href="{% url 'reports' %}"
+                 class="btn btn-secondary"
+                 style="justify-content:flex-start;padding:10px 14px">
+                <i class="bi bi-bar-chart-line"
+                   style="color:var(--teal);font-size:1rem"></i>
+                <div style="text-align:start">
+                  <div style="font-weight:600;font-size:.875rem">
+                    {% trans "View Reports" %}
+                  </div>
+                  <div style="font-size:.75rem;color:var(--text-muted);font-weight:400">
+                    {% trans "Download or print your results" %}
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+          {# Compliance breakdown donut (CSS-only) #}
+          <div style="background:var(--surface);border:1px solid var(--border);
+                      border-radius:var(--radius-lg);padding:22px;box-shadow:var(--shadow-sm)">
+            <h3 style="font-family:var(--font-display);font-size:.95rem;font-weight:700;
+                        color:var(--text-primary);margin:0 0 4px">
+              {% trans "Compliance Snapshot" %}
+            </h3>
+            <p style="font-size:.8rem;color:var(--text-muted);margin:0 0 18px">
+              {% trans "Overall rate across all answered controls." %}
+            </p>
+
+            <div style="display:flex;align-items:center;gap:20px">
+
+              {# SVG ring #}
+              <div style="position:relative;width:80px;height:80px;flex-shrink:0">
+                <svg width="80" height="80" viewBox="0 0 80 80">
+                  <circle cx="40" cy="40" r="32"
+                          fill="none" stroke="var(--surface-3)" stroke-width="8"/>
+                  <circle cx="40" cy="40" r="32"
+                          fill="none"
+                          stroke="var(--green)"
+                          stroke-width="8"
+                          stroke-linecap="round"
+                          stroke-dasharray="201.06"
+                          stroke-dashoffset="{% widthratio compliance_rate 100 201.06 as filled %}{{ filled|default:201.06 }}"
+                          transform="rotate(-90 40 40)"
+                          id="donutFill"
+                          style="transition:stroke-dashoffset .8s ease"/>
+                </svg>
+                <div style="position:absolute;inset:0;display:flex;align-items:center;
+                            justify-content:center;font-family:var(--font-display);
+                            font-size:.95rem;font-weight:800;color:var(--text-primary)">
+                  {{ compliance_rate }}%
+                </div>
+              </div>
+
+              {# Legend #}
+              <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+                <div style="display:flex;align-items:center;justify-content:space-between;
+                            font-size:.82rem">
+                  <span style="display:flex;align-items:center;gap:6px">
+                    <span style="width:10px;height:10px;border-radius:50%;
+                                 background:var(--green);flex-shrink:0"></span>
+                    {% trans "Compliant" %}
+                  </span>
+                  <span style="font-weight:700;color:var(--text-primary)">
+                    {{ compliance_rate }}%
+                  </span>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;
+                            font-size:.82rem">
+                  <span style="display:flex;align-items:center;gap:6px">
+                    <span style="width:10px;height:10px;border-radius:50%;
+                                 background:var(--surface-3);flex-shrink:0"></span>
+                    {% trans "Remaining" %}
+                  </span>
+                  <span style="font-weight:700;color:var(--text-secondary)">
+                    {% widthratio compliance_rate 100 1 as cr_frac %}
+                    {{ 100|add:"-"|add:compliance_rate }}%
+                  </span>
+                </div>
+                <div style="height:1px;background:var(--border);margin:2px 0"></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;
+                            font-size:.82rem">
+                  <span style="color:var(--text-muted)">{% trans "Completed" %}</span>
+                  <span style="font-weight:700;color:var(--text-primary)">
+                    {{ completed_count }}&thinsp;/&thinsp;{{ total_standards }}
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>{# /bottom row #}
+
+      </div>{# /main body column #}
+
+    </div>{# /page-content #}
+  </div>{# /main #}
+</div>{# /wrapper #}
+
 <script src="{% static 'js/index.js' %}"></script>
+<script>
+/* Animate all progress fills on load */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.js-fill').forEach(el => {
+    const target = el.dataset.width + '%';
+    requestAnimationFrame(() => {
+      setTimeout(() => { el.style.width = target; }, 120);
+    });
+  });
+
+  /* Animate donut */
+  const donut = document.getElementById('donutFill');
+  if (donut) {
+    const total      = 201.06;
+    const rate       = parseFloat('{{ compliance_rate }}') || 0;
+    const offset     = total - (total * rate / 100);
+    donut.style.strokeDashoffset = total;   /* start empty */
+    setTimeout(() => {
+      donut.style.strokeDashoffset = offset;
+    }, 200);
+  }
+});
+</script>
 </body>
 </html>

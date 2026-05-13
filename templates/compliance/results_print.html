@@ -1,6 +1,5 @@
 {% load static i18n %}
 {% get_current_language as LANGUAGE_CODE %}
-<!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}">
 <head>
     <meta charset="utf-8">
@@ -246,6 +245,17 @@
                 <td>{% if result.report_file %}{% trans "Yes" %}{% else %}—{% endif %}</td>
                 <td>{% if result.evidence_file %}{% trans "Yes" %}{% else %}—{% endif %}</td>
             </tr>
+            {% for log in result.validation_logs.all %}
+            <tr>
+                <td colspan="7" style="background: #f8fafc; padding: 15px; border-left: 4px solid var(--accent);">
+                    <div style="font-size: 0.85rem;">
+                        <strong>{% trans "AI Analysis:" %}</strong> {{ log.analysis|default:_("Pending analysis...") }} <br>
+                        <strong>{% trans "Quoted Standard:" %}</strong> <em>"{{ log.quoted_standard|default:_("N/A") }}"</em> <br>
+                        <strong>{% trans "Recommendation:" %}</strong> {{ log.recommendations|default:_("No recommendations.") }}
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
             {% endfor %}
         </tbody>
     </table>

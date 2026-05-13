@@ -182,3 +182,5 @@ LOGGING = {
         },
     },
 }
+
+GEMINI_API_KEY = "AIzaSyDqjLE68NO8KmrkE6qEGTP-1tU04d2XJDg"

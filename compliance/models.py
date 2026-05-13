@@ -103,17 +103,64 @@ class AssessmentResult(models.Model):
 
 
 class EvidenceValidationLog(models.Model):
+    """
+    Audit log row produced by the AI evidence analysis.
+
+    BUG FIX: compliance/models.py had the OLD schema (only message + extra).
+    The root models.py had the NEW AI fields but was never imported by the app.
+    This consolidated version adds all AI fields to the compliance app model
+    so that views.py can create logs that templates can display.
+
+    After updating this file run:
+        python manage.py makemigrations compliance
+        python manage.py migrate
+    """
+
+    COMPLIANCE_CHOICES = [
+        ("FC", "Full Compliance"),
+        ("SC", "Substantial Compliance"),
+        ("MC", "Minimal Compliance"),
+        ("NC", "Non-Compliance"),
+        ("NA", "Not Applicable"),
+    ]
+
+    CATEGORY_CHOICES = [
+        ("C", "Commendation"),
+        ("R", "Recommendation"),
+    ]
+
     assessment_result = models.ForeignKey(
-        AssessmentResult,
-        on_delete=models.CASCADE,
-        related_name='validation_logs',
+        AssessmentResult, on_delete=models.CASCADE, related_name="validation_logs"
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    message = models.TextField()
+
+    # --- AI-generated fields ---
+    quoted_standard = models.TextField(
+        null=True, blank=True,
+        help_text="Direct quote from the standards document",
+    )
+    analysis = models.TextField(
+        null=True, blank=True,
+        help_text="Independent AI evaluation of compliance",
+    )
+    compliance_level = models.CharField(
+        max_length=2, choices=COMPLIANCE_CHOICES, default="NA"
+    )
+    justification = models.TextField(null=True, blank=True)
+    recommendations = models.TextField(
+        null=True, blank=True,
+        help_text="Actionable suggestions for improvement",
+    )
+    result_category = models.CharField(
+        max_length=1, choices=CATEGORY_CHOICES, default="R"
+    )
+
+    # Kept for backward-compatibility with the keyword-scoring pipeline
+    message = models.TextField(blank=True)
     extra = models.JSONField(default=dict, blank=True)
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ["-created_at"]
 
     def __str__(self):
-        return f"{self.created_at}: {self.message[:50]}"
+        return f"{self.get_compliance_level_display()} — {self.assessment_result.control.title}"
