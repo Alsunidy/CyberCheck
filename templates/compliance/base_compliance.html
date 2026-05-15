@@ -20,57 +20,63 @@
 </head>
 <body class="{% if LANGUAGE_CODE == 'ar' %}lang-ar{% endif %}">
 
-<nav class="navbar navbar-expand navbar-light bg-light static-top shadow">
-    <div class="container">
-        <a class="navbar-brand" href="/"><img src="{% static 'images/logo.png' %}" height="50" alt="{% trans 'CyberCheck' %}"></a>
-        <div class="collapse navbar-collapse justify-content-end align-items-center">
-            <ul class="navbar-nav align-items-center flex-row flex-wrap gap-1">
-                <li class="nav-item"><a class="nav-link" href="/">{% trans "Home" %}</a></li>
-                <li class="nav-item"><a class="nav-link" href="/dashboard">{% trans "Dashboard" %}</a></li>
-                <li class="nav-item"><a class="nav-link" href="/logout">{% trans "Logout" %} ({{ user.username }})</a></li>
-                <li class="nav-item">{% include "includes/language_switcher.html" %}</li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<header class="topbar">
+      <img src="{% static 'images/logo.png' %}" alt="CyberCheck" style="height:34px">
+      <nav class="topbar-nav">
+        {% include "includes/language_switcher.html" %}
+        <a href="/logout" class="btn btn-ghost btn-sm">
+          <i class="bi bi-box-arrow-left"></i>
+          {% trans "Logout" %} ({{ user.username }})
+        </a>
+      </nav>
+    </header>
 
 <div class="wrapper">
     <aside id="sidebar">
-        <div class="d-flex">
-            <button id="toggle-btn" type="button" aria-label="{% trans 'Toggle sidebar' %}">
-                <i class="bi bi-columns-gap"></i>
-            </button>
-            <div class="sidebar-logo">
-                <a href="/dashboard">{% trans "CyberCheck" %}</a>
-            </div>
-        </div>
-        <ul class="sidebar-nav">
-            <li class="sidebar-item">
-                <a href="/dashboard" class="sidebar-link">
-                    <i class="bi bi-list-task"></i>
-                    <span>{% trans "Dashboard" %}</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a href="{% url 'standards' %}" class="sidebar-link {% block compliance_assessment_active %}{% endblock %}">
-                    <i class="bi bi-clipboard2-check"></i>
-                    <span>{% trans "Assessment" %}</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a href="{% block compliance_report_href %}{% url 'reports' %}{% endblock %}" class="sidebar-link {% block compliance_report_active %}{% endblock %}">
-                    <i class="bi bi-layout-text-sidebar-reverse"></i>
-                    <span>{% trans "Report" %}</span>
-                </a>
-            </li>
-        </ul>
-        <div class="sidebar-footer">
-            <a href="/dashboard" class="sidebar-link">
-                <i class="bi bi-person-circle"></i>
-                <span>{{ user.username }}</span>
-            </a>
-        </div>
-    </aside>
+    <div class="sidebar-header">
+      <button id="toggle-btn" type="button" aria-label="{% trans 'Toggle sidebar' %}">
+        <i class="bi bi-layout-sidebar-inset"></i>
+      </button>
+      <div class="sidebar-logo">
+        <a href="/dashboard">Cyber<span>Check</span></a>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <span class="sidebar-section-label">{% trans "Main" %}</span>
+
+      <a href="/dashboard" class="sidebar-link">
+        <i class="bi bi-speedometer2"></i>
+        <span>{% trans "Dashboard" %}</span>
+      </a>
+      <a href="{% url 'standards' %}" class="sidebar-link active">
+        <i class="bi bi-clipboard2-check"></i>
+        <span>{% trans "Assessments" %}</span>
+      </a>
+      <a href="{% url 'reports' %}" class="sidebar-link">
+        <i class="bi bi-bar-chart-line"></i>
+        <span>{% trans "Reports" %}</span>
+      </a>
+
+      <span class="sidebar-section-label" style="margin-top:16px">{% trans "Account" %}</span>
+
+      <a href="/" class="sidebar-link">
+        <i class="bi bi-house"></i>
+        <span>{% trans "Home" %}</span>
+      </a>
+      <a href="/logout" class="sidebar-link">
+        <i class="bi bi-box-arrow-left"></i>
+        <span>{% trans "Logout" %}</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="/dashboard" class="sidebar-link">
+        <i class="bi bi-person-circle"></i>
+        <span>{{ user.username }}</span>
+      </a>
+    </div>
+  </aside>
 
     <div class="main p-3">
         <div class="container-fluid py-2 py-md-3">

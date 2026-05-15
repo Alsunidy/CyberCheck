@@ -249,9 +249,31 @@
             <tr>
                 <td colspan="7" style="background: #f8fafc; padding: 15px; border-left: 4px solid var(--accent);">
                     <div style="font-size: 0.85rem;">
-                        <strong>{% trans "AI Analysis:" %}</strong> {{ log.analysis|default:_("Pending analysis...") }} <br>
-                        <strong>{% trans "Quoted Standard:" %}</strong> <em>"{{ log.quoted_standard|default:_("N/A") }}"</em> <br>
-                        <strong>{% trans "Recommendation:" %}</strong> {{ log.recommendations|default:_("No recommendations.") }}
+                        {% if log.analysis %}
+                        <strong>{% trans "Analysis:" %}</strong>
+                        {{ log.analysis }}
+                        {% else %}
+                        <strong>{% trans "Analysis:" %}</strong>
+                        {% trans "Pending analysis..." %}
+                        {% endif %}
+                        <br>
+
+                        {% if log.quoted_standard %}
+                        <strong>{% trans "Quoted Standard:" %}</strong>
+                        <em>"{{ log.quoted_standard }}"</em>
+                        {% else %}
+                        <strong>{% trans "Quoted Standard:" %}</strong>
+                        <em>"{% trans "N/A" %}"</em>
+                        {% endif %}
+                        <br>
+
+                        {% if log.recommendations %}
+                        <strong>{% trans "Recommendation:" %}</strong>
+                        {{ log.recommendations }}
+                        {% else %}
+                        <strong>{% trans "Recommendation:" %}</strong>
+                        {% trans "No recommendations." %}
+                        {% endif %}
                     </div>
                 </td>
             </tr>
