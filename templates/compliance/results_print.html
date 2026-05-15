@@ -245,38 +245,45 @@
                 <td>{% if result.report_file %}{% trans "Yes" %}{% else %}—{% endif %}</td>
                 <td>{% if result.evidence_file %}{% trans "Yes" %}{% else %}—{% endif %}</td>
             </tr>
-            {% for log in result.validation_logs.all %}
+            {% for log in result.ai_logs %}
             <tr>
                 <td colspan="7" style="background: #f8fafc; padding: 15px; border-left: 4px solid var(--accent);">
                     <div style="font-size: 0.85rem;">
-                        {% if log.analysis %}
+
                         <strong>{% trans "Analysis:" %}</strong>
                         {{ log.analysis }}
-                        {% else %}
-                        <strong>{% trans "Analysis:" %}</strong>
-                        {% trans "Pending analysis..." %}
-                        {% endif %}
                         <br>
 
-                        {% if log.quoted_standard %}
                         <strong>{% trans "Quoted Standard:" %}</strong>
                         <em>"{{ log.quoted_standard }}"</em>
-                        {% else %}
-                        <strong>{% trans "Quoted Standard:" %}</strong>
-                        <em>"{% trans "N/A" %}"</em>
-                        {% endif %}
                         <br>
 
-                        {% if log.recommendations %}
                         <strong>{% trans "Recommendation:" %}</strong>
                         {{ log.recommendations }}
-                        {% else %}
-                        <strong>{% trans "Recommendation:" %}</strong>
-                        {% trans "No recommendations." %}
-                        {% endif %}
+
                     </div>
                 </td>
             </tr>
+
+            {% empty %}
+
+            <tr>
+                <td colspan="7" style="background: #f8fafc; padding: 15px; border-left: 4px solid var(--accent);">
+                    <div style="font-size: 0.85rem;">
+                        <strong>{% trans "Analysis:" %}</strong>
+                        {% trans "Pending analysis..." %}
+                        <br>
+
+                        <strong>{% trans "Quoted Standard:" %}</strong>
+                        <em>"{% trans "N/A" %}"</em>
+                        <br>
+
+                        <strong>{% trans "Recommendation:" %}</strong>
+                        {% trans "No recommendations." %}
+                    </div>
+                </td>
+            </tr>
+
             {% endfor %}
             {% endfor %}
         </tbody>
