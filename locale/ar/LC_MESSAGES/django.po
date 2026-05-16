@@ -55,13 +55,17 @@ msgstr "حول"
 msgid "Choose a cybersecurity standard"
 msgstr "اختر معيار أمن سيبراني"
 
-msgid "Pick a framework to run a guided assessment. Your progress is saved per standard."
+msgid ""
+"Pick a framework to run a guided assessment. Your progress is saved per "
+"standard."
 msgstr "اختر إطاراً لتشغيل تقييم موجّه. يتم حفظ تقدمك لكل معيار."
 
 msgid "Start assessment"
 msgstr "بدء التقييم"
 
-msgid "No standards are available yet. Check back later or contact an administrator."
+msgid ""
+"No standards are available yet. Check back later or contact an "
+"administrator."
 msgstr "لا توجد معايير حالياً. عد لاحقاً أو راسل المسؤول."
 
 msgid "standard"
@@ -73,8 +77,12 @@ msgstr "معايير"
 msgid "Assessment reports"
 msgstr "تقارير التقييم"
 
-msgid "Open a summary or a printable report for any standard. Counts reflect answers you have saved."
-msgstr "افتح ملخصاً أو تقريراً قابلاً للطباعة لأي معيار. الأعداد تعكس إجاباتك المحفوظة."
+msgid ""
+"Open a summary or a printable report for any standard. Counts reflect "
+"answers you have saved."
+msgstr ""
+"افتح ملخصاً أو تقريراً قابلاً للطباعة لأي معيار. الأعداد تعكس إجاباتك "
+"المحفوظة."
 
 msgid "saved"
 msgstr "محفوظ"
@@ -82,11 +90,18 @@ msgstr "محفوظ"
 msgid "No data yet"
 msgstr "لا بيانات بعد"
 
-msgid "Standards you have started appear here. Open one to pick an assessment run, then view summary or print."
-msgstr "تظهر هنا المعايير التي بدأت تقييمها. افتح معياراً لاختيار جلسة تقييم، ثم اعرض الملخص أو الطباعة."
+msgid ""
+"Standards you have started appear here. Open one to pick an assessment run, "
+"then view summary or print."
+msgstr ""
+"تظهر هنا المعايير التي بدأت تقييمها. افتح معياراً لاختيار جلسة تقييم، ثم "
+"اعرض الملخص أو الطباعة."
 
-msgid "You have not started any assessments. Go to Standards to begin, then your reports will appear here."
-msgstr "لم تبدأ أي تقييم بعد. انتقل إلى «المعايير» للبدء، ثم ستظهر تقاريرك هنا."
+msgid ""
+"You have not started any assessments. Go to Standards to begin, then your "
+"reports will appear here."
+msgstr ""
+"لم تبدأ أي تقييم بعد. انتقل إلى «المعايير» للبدء، ثم ستظهر تقاريرك هنا."
 
 msgid "Summary"
 msgstr "الملخص"
@@ -103,7 +118,9 @@ msgstr "النتائج"
 msgid "No saved answers yet"
 msgstr "لا إجابات محفوظة بعد"
 
-msgid "Complete the assessment for this standard to see your compliance score and breakdown here."
+msgid ""
+"Complete the assessment for this standard to see your compliance score and "
+"breakdown here."
 msgstr "أكمل التقييم لهذا المعيار لعرض درجة الامتثال والتفصيل هنا."
 
 msgid "Go to assessment"
@@ -136,8 +153,11 @@ msgstr "تعديل التقييم"
 msgid "In progress"
 msgstr "قيد التنفيذ"
 
-msgid "Upload evidence and notes are saved when you submit. You can return later to update answers."
-msgstr "تُحفظ المرفقات والملاحظات عند الإرسال. يمكنك العودة لاحقاً لتحديث الإجابات."
+msgid ""
+"Upload evidence and notes are saved when you submit. You can return later to"
+" update answers."
+msgstr ""
+"تُحفظ المرفقات والملاحظات عند الإرسال. يمكنك العودة لاحقاً لتحديث الإجابات."
 
 msgid "Compliance status"
 msgstr "حالة الامتثال"
@@ -199,7 +219,9 @@ msgstr "إجمالي المعايير"
 msgid "Compliance Assessment Simplified"
 msgstr "تقييم الامتثال ببساطة"
 
-msgid "Easily evaluate your organization's security and compliance posture in minutes."
+msgid ""
+"Easily evaluate your organization's security and compliance posture in "
+"minutes."
 msgstr "قيّم وضع أمن المعلومات والامتثال في دقائق."
 
 msgid "Start Assessment"
@@ -226,8 +248,11 @@ msgstr "© 2025 جميع الحقوق محفوظة."
 msgid "Assessment saved successfully. Your results are summarized below."
 msgstr "تم حفظ التقييم بنجاح. ملخص نتائجك أدناه."
 
-msgid "One or more compliance statuses were missing or invalid. Please review the form and try again."
-msgstr "حالة امتثال واحدة أو أكثر ناقصة أو غير صالحة. راجع النموذج وحاول مجدداً."
+msgid ""
+"One or more compliance statuses were missing or invalid. Please review the "
+"form and try again."
+msgstr ""
+"حالة امتثال واحدة أو أكثر ناقصة أو غير صالحة. راجع النموذج وحاول مجدداً."
 
 msgid "We could not save your assessment. Please try again in a moment."
 msgstr "تعذّر حفظ التقييم. حاول بعد لحظات."
@@ -295,14 +320,23 @@ msgstr "العودة للنتائج"
 msgid "All reports"
 msgstr "كل التقارير"
 
-msgid "Our platform guides you through structured assessments, identifies gaps, and provides clear recommendations to help you stay compliant and secure."
-msgstr "منصتنا ترشدك عبر تقييمات منظمة، تحدّد الفجوات، وتقدّم توصيات واضحة لتبقى متوافقاً وآمناً."
+msgid ""
+"Our platform guides you through structured assessments, identifies gaps, and"
+" provides clear recommendations to help you stay compliant and secure."
+msgstr ""
+"منصتنا ترشدك عبر تقييمات منظمة، تحدّد الفجوات، وتقدّم توصيات واضحة لتبقى "
+"متوافقاً وآمناً."
 
 msgid "Introducing CyberCheck"
 msgstr "تعرّف على CyberCheck"
 
-msgid "CyberCheck simplifies cybersecurity compliance by turning complex frameworks into clear, guided assessments. Quickly evaluate your security posture, identify gaps, and stay aligned with industry standards."
-msgstr "يبسّط CyberCheck امتثال الأمن السيبراني بحويل الأطر المعقّدة إلى تقييمات واضحة وموجّهة. قيّم وضعك الأمني بسرعة، حدّد الفجوات، والتزم بالمعايير."
+msgid ""
+"CyberCheck simplifies cybersecurity compliance by turning complex frameworks"
+" into clear, guided assessments. Quickly evaluate your security posture, "
+"identify gaps, and stay aligned with industry standards."
+msgstr ""
+"يبسّط CyberCheck امتثال الأمن السيبراني بحويل الأطر المعقّدة إلى تقييمات "
+"واضحة وموجّهة. قيّم وضعك الأمني بسرعة، حدّد الفجوات، والتزم بالمعايير."
 
 msgid "Built for Compliance & Security Teams"
 msgstr "مخصّص لفرق الامتثال والأمن"
@@ -316,25 +350,33 @@ msgstr "سريع وبسيط ومتجاوب بالكامل"
 msgid "Built for Security & Compliance Teams"
 msgstr "لبناء فرق الأمن والامتثال"
 
-msgid "CyberCheck helps organizations perform structured cybersecurity compliance assessments with ease."
-msgstr "يساعد CyberCheck المنظمات على إجراء تقييمات امتثال أمن سيبراني منظمة بسهولة."
+msgid ""
+"CyberCheck helps organizations perform structured cybersecurity compliance "
+"assessments with ease."
+msgstr ""
+"يساعد CyberCheck المنظمات على إجراء تقييمات امتثال أمن سيبراني منظمة بسهولة."
 
 msgid "Guided Compliance Assessments"
 msgstr "تقييمات امتثال موجّهة"
 
-msgid "Follow clear step-by-step assessments aligned with recognized frameworks."
+msgid ""
+"Follow clear step-by-step assessments aligned with recognized frameworks."
 msgstr "اتبع تقييمات واضحة خطوة بخطوة متوافقة مع أطر معترف بها."
 
 msgid "Security Gap Analysis"
 msgstr "تحليل فجوات الأمن"
 
-msgid "CyberCheck analyzes your responses to highlight weaknesses in your compliance program."
+msgid ""
+"CyberCheck analyzes your responses to highlight weaknesses in your "
+"compliance program."
 msgstr "يحلّل CyberCheck إجاباتك لإبراز نقاط الضعف في برنامج الامتثال."
 
 msgid "Compliance Made Easy"
 msgstr "الامتثال أسهل"
 
-msgid "Start your cybersecurity compliance assessment today and get a clear picture of your security posture."
+msgid ""
+"Start your cybersecurity compliance assessment today and get a clear picture"
+" of your security posture."
 msgstr "ابدأ تقييم الامتثال اليوم واحصل على صورة واضحة لموقفك الأمني."
 
 msgid "Start Now"
@@ -347,7 +389,7 @@ msgid "Register - CyberCheck"
 msgstr "التسجيل — CyberCheck"
 
 msgid "For PDF: Print → choose \"Save as PDF\" / \"Microsoft Print to PDF\"."
-msgstr "لحفظ PDF: اطبع ← اختر «حفظ كملف PDF» أو «Microsoft Print to PDF»."
+msgstr "لتصدير PDF: اطبع ← اختر «حفظ كـ PDF» / «Microsoft Print to PDF»."
 
 msgid "CyberCheck — compliance assessment report"
 msgstr "CyberCheck — تقرير تقييم الامتثال"
@@ -373,21 +415,32 @@ msgstr "سياق، خطط معالجة، أو مراجع…"
 msgid "No responses in this domain."
 msgstr "لا إجابات في هذا المجال."
 
-msgid "No assessment responses are recorded for this standard yet. Complete the assessment online, then open this report again."
-msgstr "لا توجد نتائج تقييم مسجّلة لهذا المعيار بعد. أكمل التقييم عبر الموقع ثم افتح هذا التقرير مجدداً."
+msgid ""
+"No assessment responses are recorded for this standard yet. Complete the "
+"assessment online, then open this report again."
+msgstr ""
+"لا توجد نتائج تقييم مسجّلة لهذا المعيار بعد. أكمل التقييم عبر الموقع ثم افتح"
+" هذا التقرير مجدداً."
 
 #, python-format
 msgid "Overall: %(s)s%% compliant"
 msgstr "الإجمالي: %(s)s%% متوافق"
 
-msgid "CyberCheck — for internal use. Evidence files are stored in the application; list above indicates attachment only."
-msgstr "CyberCheck — للاستخدام الداخلي. تُخزَّن ملفات الأدلة في التطبيق؛ ما يظهر أعلاه يشير إلى وجود مرفق فقط."
+msgid ""
+"CyberCheck — for internal use. Evidence files are stored in the application;"
+" list above indicates attachment only."
+msgstr ""
+"CyberCheck — للاستخدام الداخلي. تُخزَّن ملفات الأدلة في التطبيق؛ ما يظهر "
+"أعلاه يشير إلى وجود مرفق فقط."
 
 msgid "summary for this assessment."
 msgstr "ملخص لهذا التقييم."
 
-msgid "Pick a framework. You can create multiple saved assessments per standard (e.g. for different companies)."
-msgstr "اختر إطاراً. يمكنك إنشاء عدة تقييمات محفوظة لكل معيار (مثلاً لشركات مختلفة)."
+msgid ""
+"Pick a framework. You can create multiple saved assessments per standard "
+"(e.g. for different companies)."
+msgstr ""
+"اختر إطاراً. يمكنك إنشاء عدة تقييمات محفوظة لكل معيار (مثلاً لشركات مختلفة)."
 
 msgid "assessments"
 msgstr "تقييمات"
@@ -425,11 +478,18 @@ msgstr "متابعة"
 msgid "Delete"
 msgstr "حذف"
 
-msgid "No assessments yet. Use the form above to create your first one for this standard."
-msgstr "لا توجد تقييمات بعد. استخدم النموذج أعلاه لإنشاء أول تقييم لهذا المعيار."
+msgid ""
+"No assessments yet. Use the form above to create your first one for this "
+"standard."
+msgstr ""
+"لا توجد تقييمات بعد. استخدم النموذج أعلاه لإنشاء أول تقييم لهذا المعيار."
 
-msgid "Create a separate assessment for each company, branch, or time period. Each one keeps its own answers, evidence, and AI scores."
-msgstr "أنشئ تقييماً منفصلاً لكل شركة أو فرع أو فترة زمنية. كل تقييم يحتفظ بإجاباته وأدلته ودرجاته."
+msgid ""
+"Create a separate assessment for each company, branch, or time period. Each "
+"one keeps its own answers, evidence, and AI scores."
+msgstr ""
+"أنشئ تقييماً منفصلاً لكل شركة أو فرع أو فترة زمنية. كل تقييم يحتفظ بإجاباته "
+"وأدلته ودرجاته."
 
 msgid "Other assessments"
 msgstr "تقييمات أخرى"
@@ -493,7 +553,8 @@ msgid "Invalid file type. Allowed types: PDF, PNG, JPG, DOCX."
 msgstr "نوع الملف غير مسموح. الأنواع المسموحة: PDF، PNG، JPG، DOCX."
 
 msgid "Invalid stored evidence type. Allowed types: PDF, PNG, JPG, DOCX."
-msgstr "نوع ملف الدليل المحفوظ غير مسموح. الأنواع المسموحة: PDF، PNG، JPG، DOCX."
+msgstr ""
+"نوع ملف الدليل المحفوظ غير مسموح. الأنواع المسموحة: PDF، PNG، JPG، DOCX."
 
 msgid "English"
 msgstr "English"
@@ -539,3 +600,233 @@ msgstr "مراجعة دليل ذكية"
 
 msgid "Meta"
 msgstr "بيانات وصفية"
+
+msgid "Account"
+msgstr "الحساب"
+
+msgid "All Standards"
+msgstr "كل المعايير"
+
+msgid "Analysis:"
+msgstr "التحليل:"
+
+msgid "Answered"
+msgstr "مُجاب"
+
+msgid "Answered controls across all standards."
+msgstr "الضوابط المُجاب عنها عبر جميع المعايير."
+
+msgid "Assessment Name"
+msgstr "اسم التقييم"
+
+msgid "Assessment Progress"
+msgstr "تقدّم التقييم"
+
+msgid "Assessment saved successfully."
+msgstr "تم حفظ التقييم بنجاح."
+
+msgid "Attach the control report document."
+msgstr "أرفق مستند تقرير الضابط."
+
+msgid "Available frameworks"
+msgstr "الأُطُر المتاحة"
+
+msgid "Cancel"
+msgstr "إلغاء"
+
+msgid "Choose a standard and begin"
+msgstr "اختر معياراً وابدأ"
+
+msgid "Complete"
+msgstr "مكتمل"
+
+msgid "Completed"
+msgstr "مكتمل"
+
+msgid "Compliance Snapshot"
+msgstr "لمحة الامتثال"
+
+msgid "Control %(cid)s — %(field)s: %(err)s"
+msgstr "الضابط %(cid)s — %(field)s: %(err)s"
+
+msgid "Could not save assessment."
+msgstr "تعذّر حفظ التقييم."
+
+msgid "Create & Start"
+msgstr "إنشاء والبدء"
+
+msgid "Create First Assessment"
+msgstr "إنشاء أول تقييم"
+
+msgid "Create a separate assessment for each company, branch, or time period."
+msgstr "أنشئ تقييماً منفصلاً لكل شركة أو فرع أو فترة زمنية."
+
+msgid ""
+"Create your first assessment for this standard. Each one keeps its own "
+"answers, evidence, and AI scores."
+msgstr ""
+"أنشئ أول تقييم لهذا المعيار. كل تقييم يحتفظ بإجاباته وأدلته ودرجات الذكاء "
+"الاصطناعي."
+
+msgid "Current evidence:"
+msgstr "الدليل الحالي:"
+
+msgid "Current report:"
+msgstr "التقرير الحالي:"
+
+msgid "CyberCheck Admin"
+msgstr "إدارة CyberCheck"
+
+msgid "CyberCheck Administration"
+msgstr "إدارة CyberCheck"
+
+msgid ""
+"CyberCheck — for internal use. Report and evidence files are stored in the "
+"application; list above indicates attachment only."
+msgstr ""
+"CyberCheck — للاستخدام الداخلي. ملفات التقرير والدليل محفوظة في التطبيق؛ "
+"القائمة أعلاه تشير إلى وجود مرفق فقط."
+
+msgid "Download or print your results"
+msgstr "تنزيل أو طباعة نتائجك"
+
+msgid "Evidence file is missing."
+msgstr "ملف الدليل مفقود."
+
+msgid "Evidence file is too small (minimum 1 KB)."
+msgstr "ملف الدليل صغير جداً (الحد الأدنى 1 كيلوبايت)."
+
+msgid "File is too small (minimum 1 KB)."
+msgstr "الملف صغير جداً (الحد الأدنى 1 كيلوبايت)."
+
+msgid "Fully assessed"
+msgstr "مُقيَّم بالكامل"
+
+msgid "In Progress"
+msgstr "قيد التنفيذ"
+
+msgid "Invalid compliance status."
+msgstr "حالة امتثال غير صالحة."
+
+msgid "Jump straight to what you need."
+msgstr "انتقل مباشرةً لما تحتاجه."
+
+msgid "Main"
+msgstr "الرئيسية"
+
+msgid "Monitor your compliance posture across all cybersecurity frameworks."
+msgstr "راقب وضع الامتثال لديك عبر جميع أُطُر الأمن السيبراني."
+
+msgid "N/A"
+msgstr "غير متاح"
+
+msgid "New Assessment"
+msgstr "تقييم جديد"
+
+msgid "New assessment created."
+msgstr "تم إنشاء التقييم."
+
+msgid "No assessments yet"
+msgstr "لا توجد تقييمات بعد"
+
+msgid "No recommendations."
+msgstr "لا توصيات."
+
+msgid "Not Started"
+msgstr "لم يبدأ"
+
+msgid "Open"
+msgstr "فتح"
+
+msgid "Overall rate across all answered controls."
+msgstr "المعدل الإجمالي عبر جميع الضوابط المُجاب عنها."
+
+msgid "Overview"
+msgstr "نظرة عامة"
+
+msgid "Pending analysis..."
+msgstr "التحليل قيد الانتظار..."
+
+msgid "Pick a standard to get started."
+msgstr "اختر معياراً للبدء."
+
+msgid "Progress"
+msgstr "التقدّم"
+
+msgid "Quick Actions"
+msgstr "إجراءات سريعة"
+
+msgid "Quoted Standard:"
+msgstr "النص المقتبس من المعيار:"
+
+msgid "Recommendation:"
+msgstr "التوصية:"
+
+msgid "Remaining"
+msgstr "المتبقي"
+
+msgid "Report (optional)"
+msgstr "التقرير (اختياري)"
+
+msgid "Report file"
+msgstr "ملف التقرير"
+
+msgid "Sign in to continue to the administration panel."
+msgstr "سجّل الدخول للمتابعة إلى لوحة الإدارة."
+
+msgid "Standard"
+msgstr "المعيار"
+
+msgid "Start First Assessment"
+msgstr "بدء أول تقييم"
+
+msgid ""
+"Upload report and evidence with notes, then submit. You can return later to "
+"update answers."
+msgstr ""
+"ارفع التقرير والدليل مع الملاحظات ثم أرسل. يمكنك العودة لاحقاً لتحديث "
+"الإجابات."
+
+msgid "View Reports"
+msgstr "عرض التقارير"
+
+msgid "Welcome to CyberCheck"
+msgstr "مرحباً بك في CyberCheck"
+
+msgid ""
+"You can create multiple assessments per standard for different companies or "
+"time periods."
+msgstr "يمكنك إنشاء عدة تقييمات لكل معيار لشركات أو فترات مختلفة."
+
+msgid "e.g. Acme Corp — Q2 2026"
+msgstr "مثال: شركة أ — الربع الثاني 2026"
+
+msgid "Partially Compliant"
+msgstr "ممتثل جزئياً"
+
+msgid "Non-Compliant"
+msgstr "غير ممتثل"
+
+msgid "Full Compliance"
+msgstr "امتثال كامل"
+
+msgid "Substantial Compliance"
+msgstr "امتثال جوهري"
+
+msgid "Minimal Compliance"
+msgstr "امتثال محدود"
+
+msgid "Non-Compliance"
+msgstr "عدم امتثال"
+
+msgid "Not Applicable"
+msgstr "غير قابل للتطبيق"
+
+msgid "Commendation"
+msgstr "إشادة"
+
+msgid "Recommendation"
+msgstr "توصية"
+
+msgid "Compliance"
+msgstr "الامتثال"

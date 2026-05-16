@@ -31,49 +31,39 @@
             </div>
             {% else %}
 
-            <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4 results-report-card">
                 <div class="card-body p-4 p-lg-5">
-                    <div class="row align-items-center gy-4">
-                        <div class="col-lg-auto text-center text-lg-start">
-                            <div class="results-hero-score mx-auto mx-lg-0">
-                                <span>{{ score }}%</span>
-                                <span>{% trans "Compliant" %}</span>
-                            </div>
+                    <div class="results-report-summary">
+                        <div class="results-score-ring" role="img" aria-label="{% trans 'Compliant' %}: {{ score }}%">
+                            <span class="results-score-ring-value">{{ score }}%</span>
+                            <span class="results-score-ring-label">{% trans "Compliant" %}</span>
                         </div>
-                        <div class="col-lg">
+                        <div class="results-report-details">
                             <p class="text-uppercase small fw-semibold text-primary mb-1" style="letter-spacing: 0.06em;">{% trans "Report" %}</p>
                             <h1 class="h2 mb-2 fw-semibold">{% trans "Assessment results" %}</h1>
                             <p class="text-muted mb-1 fw-semibold">{{ assessment_run.title }}</p>
                             <p class="text-muted mb-3 mb-lg-4">{{ standard.name }} — {% trans "summary for this assessment." %}</p>
-                            <div class="row g-2 g-sm-3 small">
-                                <div class="col-6 col-sm-3">
-                                    <div class="rounded-3 border bg-light p-3 text-center">
-                                        <div class="h4 mb-0 text-dark">{{ assessed_total }}</div>
-                                        <div class="text-muted">{% trans "Assessed" %}</div>
-                                    </div>
+                            <div class="results-stat-pills small">
+                                <div class="results-stat-pill rounded-3 border bg-light p-3 text-center">
+                                    <div class="h4 mb-0 text-dark">{{ assessed_total }}</div>
+                                    <div class="text-muted">{% trans "Assessed" %}</div>
                                 </div>
-                                <div class="col-6 col-sm-3">
-                                    <div class="rounded-3 border border-success border-opacity-25 bg-success bg-opacity-10 p-3 text-center">
-                                        <div class="h4 mb-0 text-success">{{ compliant_count }}</div>
-                                        <div class="text-muted">{% trans "Compliant" %}</div>
-                                    </div>
+                                <div class="results-stat-pill rounded-3 border border-success border-opacity-25 bg-success bg-opacity-10 p-3 text-center">
+                                    <div class="h4 mb-0 text-success">{{ compliant_count }}</div>
+                                    <div class="text-muted">{% trans "Compliant" %}</div>
                                 </div>
-                                <div class="col-6 col-sm-3">
-                                    <div class="rounded-3 border border-warning border-opacity-25 bg-warning bg-opacity-10 p-3 text-center">
-                                        <div class="h4 mb-0 text-warning">{{ partial_count }}</div>
-                                        <div class="text-muted">{% trans "Partial" %}</div>
-                                    </div>
+                                <div class="results-stat-pill rounded-3 border border-warning border-opacity-25 bg-warning bg-opacity-10 p-3 text-center">
+                                    <div class="h4 mb-0 text-warning">{{ partial_count }}</div>
+                                    <div class="text-muted">{% trans "Partial" %}</div>
                                 </div>
-                                <div class="col-6 col-sm-3">
-                                    <div class="rounded-3 border border-danger border-opacity-25 bg-danger bg-opacity-10 p-3 text-center">
-                                        <div class="h4 mb-0 text-danger">{{ non_compliant_count }}</div>
-                                        <div class="text-muted">{% trans "Non-compliant" %}</div>
-                                    </div>
+                                <div class="results-stat-pill rounded-3 border border-danger border-opacity-25 bg-danger bg-opacity-10 p-3 text-center">
+                                    <div class="h4 mb-0 text-danger">{{ non_compliant_count }}</div>
+                                    <div class="text-muted">{% trans "Non-compliant" %}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="mt-4 pt-3 border-top d-flex flex-wrap gap-2 align-items-center">
+                    <div class="mt-4 pt-3 border-top results-report-actions d-flex flex-wrap gap-2 align-items-center">
                         <a href="{% url 'assessment' standard.id assessment_run.id %}" class="btn btn-primary rounded-pill px-4">
                             <i class="bi bi-arrow-repeat me-1"></i> {% trans "Edit assessment" %}
                         </a>

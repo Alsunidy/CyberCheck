@@ -97,8 +97,10 @@
 
         {# Total standards #}
         <div class="stat-card blue">
-          <div class="stat-card-icon"><i class="bi bi-layers"></i></div>
-          <div class="stat-card-label">{% trans "Total Standards" %}</div>
+          <div class="stat-card-header">
+            <div class="stat-card-label">{% trans "Total Standards" %}</div>
+            <div class="stat-card-icon"><i class="bi bi-layers"></i></div>
+          </div>
           <div class="stat-card-value">{{ total_standards }}</div>
           <div class="stat-card-sub">
             <i class="bi bi-grid"></i> {% trans "Available frameworks" %}
@@ -107,8 +109,10 @@
 
         {# Compliance rate #}
         <div class="stat-card green">
-          <div class="stat-card-icon"><i class="bi bi-shield-check"></i></div>
-          <div class="stat-card-label">{% trans "Compliance Rate" %}</div>
+          <div class="stat-card-header">
+            <div class="stat-card-label">{% trans "Compliance Rate" %}</div>
+            <div class="stat-card-icon"><i class="bi bi-shield-check"></i></div>
+          </div>
           <div class="stat-card-value">{{ compliance_rate }}%</div>
           <div class="stat-progress" style="margin-top:6px">
             <div class="stat-progress-fill js-fill"
@@ -119,8 +123,10 @@
 
         {# Completed #}
         <div class="stat-card teal">
-          <div class="stat-card-icon"><i class="bi bi-check-circle"></i></div>
-          <div class="stat-card-label">{% trans "Completed" %}</div>
+          <div class="stat-card-header">
+            <div class="stat-card-label">{% trans "Completed" %}</div>
+            <div class="stat-card-icon"><i class="bi bi-check-circle"></i></div>
+          </div>
           <div class="stat-card-value">{{ completed_count }}</div>
           <div class="stat-card-sub">
             <i class="bi bi-award"></i> {% trans "Fully assessed" %}
